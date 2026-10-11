@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'shop',
-    'django_ratelimit',  
+    # 'django_ratelimit',  
     'drf_spectacular',   
     'django_filters',             
 ]

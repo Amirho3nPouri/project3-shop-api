@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
-from django.utils.decorators import method_decorator
-from django_ratelimit.decorators import ratelimit
+# from django.utils.decorators import method_decorator
+# from django_ratelimit.decorators import ratelimit
 
 from rest_framework import viewsets, permissions, status, generics
 from rest_framework.decorators import action
@@ -20,7 +20,7 @@ from .serializers import (
 
 # ==================== Category ====================
 
-@method_decorator(ratelimit(key='ip', rate='20/m', method='POST'), name='create')
+# @method_decorator(ratelimit(key='ip', rate='20/m', method='POST'), name='create')
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -34,8 +34,8 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 # ==================== Product ====================
 
-@method_decorator(ratelimit(key='ip', rate='10/m', method='POST'), name='create')
-@method_decorator(ratelimit(key='ip', rate='100/m', method='GET'), name='list')
+# @method_decorator(ratelimit(key='ip', rate='10/m', method='POST'), name='create')
+# @method_decorator(ratelimit(key='ip', rate='100/m', method='GET'), name='list')
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
@@ -127,7 +127,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 
 # ==================== Register ====================
 
-@method_decorator(ratelimit(key='ip', rate='5/h', method='POST'), name='post')
+# @method_decorator(ratelimit(key='ip', rate='5/h', method='POST'), name='post')
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
