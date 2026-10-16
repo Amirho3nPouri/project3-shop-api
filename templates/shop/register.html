@@ -1,0 +1,340 @@
+{% extends 'shop/base.html' %} {% load static %} {% block title %}ثبت‌نام |
+PhemaPlant{% endblock %} {% block content %}
+
+<section class="min-h-[80vh] flex items-center justify-center py-16 px-4">
+  <div class="w-full max-w-md">
+    <div
+      class="bg-white dark:bg-white/5 rounded-3xl shadow-xl p-8 md:p-10 transition-colors duration-500"
+    >
+      <!-- لوگو -->
+      <div class="text-center mb-8">
+        <img
+          src="{% static 'shop/img/logo.png' %}"
+          alt="PhemaPlant"
+          class="h-20 mx-auto mb-4"
+        />
+        <h1
+          class="text-2xl font-bold text-phema-text dark:text-phema-text-dark"
+        >
+          خوش اومدی! 🌿
+        </h1>
+        <p class="text-sm opacity-70 mt-2">
+          یه حساب بساز و به خانواده‌ی فیما بپیوند
+        </p>
+      </div>
+
+      <!-- پیام موفقیت -->
+      <div
+        id="success-message"
+        class="hidden bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-sm p-4 rounded-xl border border-green-200 dark:border-green-800 text-center"
+      >
+        <div class="text-3xl mb-2">✅</div>
+        <p class="font-bold mb-1">ثبت‌نامت با موفقیت انجام شد!</p>
+        <p class="text-xs opacity-80">در حال انتقال به صفحه ورود...</p>
+      </div>
+
+      <!-- فرم -->
+      <form id="register-form" class="space-y-5" novalidate>
+        <!-- پیام خطا -->
+        <div
+          id="error-message"
+          class="hidden bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm p-4 rounded-xl border border-red-200 dark:border-red-800"
+        ></div>
+
+        <!-- یوزرنیم -->
+        <div>
+          <label
+            for="username"
+            class="block text-sm font-medium mb-2 text-phema-text dark:text-phema-text-dark"
+            >نام کاربری <span class="text-red-500">*</span></label
+          >
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="w-full px-4 py-3 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-phema-bg-dark focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
+            placeholder="مثلاً: amir"
+          />
+        </div>
+
+        <!-- ایمیل -->
+        <div>
+          <label
+            for="email"
+            class="block text-sm font-medium mb-2 text-phema-text dark:text-phema-text-dark"
+            >ایمیل <span class="text-red-500">*</span></label
+          >
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="w-full px-4 py-3 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-phema-bg-dark focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
+            placeholder="you@example.com"
+          />
+        </div>
+
+        <!-- نام و نام خانوادگی -->
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label
+              for="first_name"
+              class="block text-sm font-medium mb-2 text-phema-text dark:text-phema-text-dark"
+              >نام <span class="text-red-500">*</span></label
+            >
+            <input
+              type="text"
+              id="first_name"
+              name="first_name"
+              class="w-full px-4 py-3 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-phema-bg-dark focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
+              placeholder="امیر"
+            />
+          </div>
+          <div>
+            <label
+              for="last_name"
+              class="block text-sm font-medium mb-2 text-phema-text dark:text-phema-text-dark"
+              >نام خانوادگی</label
+            >
+            <input
+              type="text"
+              id="last_name"
+              name="last_name"
+              class="w-full px-4 py-3 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-phema-bg-dark focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
+              placeholder="پوری"
+            />
+          </div>
+        </div>
+
+        <!-- پسورد -->
+        <div>
+          <label
+            for="password"
+            class="block text-sm font-medium mb-2 text-phema-text dark:text-phema-text-dark"
+            >رمز عبور <span class="text-red-500">*</span></label
+          >
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="w-full px-4 py-3 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-phema-bg-dark focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
+            placeholder="حداقل ۸ کاراکتر (ترکیب حرف و عدد)"
+          />
+        </div>
+
+        <!-- تایید پسورد -->
+        <div>
+          <label
+            for="password_confirm"
+            class="block text-sm font-medium mb-2 text-phema-text dark:text-phema-text-dark"
+            >تایید رمز عبور <span class="text-red-500">*</span></label
+          >
+          <input
+            type="password"
+            id="password_confirm"
+            name="password_confirm"
+            class="w-full px-4 py-3 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-phema-bg-dark focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
+            placeholder="دوباره رمز رو وارد کن"
+          />
+        </div>
+
+        <!-- دکمه ثبت‌نام -->
+        <button
+          type="submit"
+          id="submit-btn"
+          class="w-full py-3.5 bg-phema-green dark:bg-phema-gold text-white dark:text-phema-text rounded-xl font-bold hover:bg-phema-green-light dark:hover:bg-phema-pot transition-all duration-300 hover:shadow-lg"
+        >
+          ثبت‌نام 🌱
+        </button>
+      </form>
+
+      <!-- لینک ورود -->
+      <p class="text-center text-sm mt-6 opacity-70">
+        حساب داری؟
+        <a
+          href="{% url 'web:login' %}"
+          class="text-phema-green dark:text-phema-gold font-bold hover:underline transition-colors"
+          >وارد شو</a
+        >
+      </p>
+    </div>
+  </div>
+</section>
+
+{% endblock %} {% block extra_js %}
+<script>
+  document
+    .getElementById("register-form")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById("submit-btn");
+      const errorMessage = document.getElementById("error-message");
+      const successMessage = document.getElementById("success-message");
+      const form = document.getElementById("register-form");
+
+      // پاک کردن پیام‌های قبلی
+      errorMessage.classList.add("hidden");
+      errorMessage.innerHTML = "";
+
+      // ==================== اعتبارسنجی سمت کلاینت ====================
+      const errors = [];
+
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const firstName = document.getElementById("first_name").value.trim();
+      const lastName = document.getElementById("last_name").value.trim();
+      const password = document.getElementById("password").value;
+      const passwordConfirm = document.getElementById("password_confirm").value;
+
+      // چک کردن فیلدهای اجباری
+      if (!username) errors.push("نام کاربری رو وارد کن.");
+      if (!email) errors.push("ایمیل رو وارد کن.");
+      if (!firstName) errors.push("نامت رو وارد کن.");
+      if (!password) errors.push("رمز عبور رو وارد کن.");
+      if (!passwordConfirm) errors.push("تایید رمز عبور رو وارد کن.");
+
+      // چک کردن فرمت ایمیل
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errors.push("ایمیل معتبر نیست. (مثلاً: you@example.com)");
+      }
+
+      // چک کردن طول رمز
+      if (password && password.length < 8) {
+        errors.push("رمز عبور باید حداقل ۸ کاراکتر باشه.");
+      }
+
+      // چک کردن ترکیب رمز (حرف و عدد)
+      if (password && password.length >= 8) {
+        const hasLetter = /[a-zA-Z]/.test(password);
+        const hasNumber = /[0-9]/.test(password);
+        if (!hasLetter || !hasNumber) {
+          errors.push("رمز عبور باید ترکیب حرف و عدد باشه.");
+        }
+      }
+
+      // چک کردن یکسان بودن رمزها
+      if (password && passwordConfirm && password !== passwordConfirm) {
+        errors.push("رمزهای عبور یکسان نیستن.");
+      }
+
+      // اگه خطا داشت، نشون بده
+      if (errors.length > 0) {
+        errorMessage.innerHTML = errors.map((err) => "❌ " + err).join("<br>");
+        errorMessage.classList.remove("hidden");
+        return;
+      }
+
+      // ==================== ارسال به سرور ====================
+      submitBtn.disabled = true;
+      submitBtn.textContent = "در حال ثبت‌نام...";
+
+      const formData = {
+        username: username,
+        email: email,
+        first_name: firstName,
+        last_name: lastName,
+        password: password,
+        password_confirm: passwordConfirm,
+      };
+
+      try {
+        const response = await fetch("/api/register/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          form.classList.add("hidden");
+          successMessage.classList.remove("hidden");
+
+          setTimeout(() => {
+            window.location.href = "/login/";
+          }, 2000);
+        } else {
+          // ==================== ترجمه پیام‌های خطا ====================
+          const serverErrors = [];
+
+          const translateError = (msg) => {
+            const msgLower = msg.toLowerCase();
+            if (
+              msgLower.includes("this field is required") ||
+              msgLower.includes("this field may not be blank")
+            ) {
+              return "این فیلد اجباریه.";
+            }
+            if (msgLower.includes("enter a valid email")) {
+              return "ایمیل معتبر وارد کن.";
+            }
+            if (msgLower.includes("already exists")) {
+              return "قبلاً ثبت شده.";
+            }
+            if (msgLower.includes("too short")) {
+              return "خیلی کوتاهه.";
+            }
+            if (msgLower.includes("too common")) {
+              return "خیلی رایجه. رمز قوی‌تری انتخاب کن.";
+            }
+            if (msgLower.includes("entirely numeric")) {
+              return "نباید کاملاً عددی باشه. ترکیب حرف و عدد استفاده کن.";
+            }
+            if (msgLower.includes("too similar")) {
+              return "شبیه اطلاعات شخصیت نباشه.";
+            }
+            return msg;
+          };
+
+          if (data.username) {
+            serverErrors.push(
+              "نام کاربری: " + data.username.map(translateError).join(" "),
+            );
+          }
+          if (data.email) {
+            serverErrors.push(
+              "ایمیل: " + data.email.map(translateError).join(" "),
+            );
+          }
+          if (data.first_name) {
+            serverErrors.push(
+              "نام: " + data.first_name.map(translateError).join(" "),
+            );
+          }
+          if (data.password) {
+            serverErrors.push(
+              "رمز عبور: " + data.password.map(translateError).join(" "),
+            );
+          }
+          if (data.password_confirm) {
+            serverErrors.push(
+              "تایید رمز: " +
+                data.password_confirm.map(translateError).join(" "),
+            );
+          }
+          if (data.detail) {
+            serverErrors.push(data.detail);
+          }
+          if (serverErrors.length === 0) {
+            serverErrors.push("خطایی رخ داد. لطفاً دوباره تلاش کن.");
+          }
+
+          errorMessage.innerHTML = serverErrors
+            .map((err) => "❌ " + err)
+            .join("<br>");
+          errorMessage.classList.remove("hidden");
+
+          submitBtn.disabled = false;
+          submitBtn.textContent = "ثبت‌نام 🌱";
+        }
+      } catch (error) {
+        errorMessage.innerHTML = "❌ خطای شبکه. لطفاً اتصالت رو چک کن.";
+        errorMessage.classList.remove("hidden");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "ثبت‌نام 🌱";
+      }
+    });
+</script>
+{% endblock %}

@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.so
+.Python
+build/
+dist/
+*.egg-info/
 
 # Django
 *.log
@@ -10,11 +14,13 @@ db.sqlite3
 db.sqlite3-journal
 /media/
 /staticfiles/
+/logs/
 
 # Virtual Environment
 venv/
 env/
 ENV/
+.venv/
 
 # Environment Variables
 .env

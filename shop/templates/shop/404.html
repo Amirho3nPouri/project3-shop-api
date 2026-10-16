@@ -1,0 +1,57 @@
+{% extends 'shop/base.html' %} {% load static %} {% block title %}صفحه پیدا نشد
+| PhemaPlant{% endblock %} {% block content %}
+
+<section class="min-h-[70vh] flex items-center justify-center py-16 px-4">
+  <div class="text-center max-w-md">
+    <!-- ایموجی -->
+    <div class="text-9xl mb-8">🌱</div>
+
+    <!-- تیتر -->
+    <h1
+      class="text-6xl font-bold text-phema-green dark:text-phema-gold mb-4 transition-colors"
+    >
+      ۴۰۴
+    </h1>
+    <h2
+      class="text-2xl font-bold mb-4 text-phema-text dark:text-phema-text-dark"
+    >
+      این صفحه پیدا نشد
+    </h2>
+
+    <!-- توضیح -->
+    <p class="opacity-70 mb-8 leading-relaxed">
+      مثل یه گیاهی که تو گلدونش نیست، این صفحه هم اینجا نیست! 🌿
+      <br />
+      شاید آدرس رو اشتباه زدی یا صفحه حذف شده.
+    </p>
+
+    <!-- دکمه‌ها -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a
+        href="{% url 'web:home' %}"
+        class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-phema-green dark:bg-phema-gold text-white dark:text-phema-text rounded-full font-medium hover:bg-phema-green-light dark:hover:bg-phema-pot transition-all hover:gap-3"
+      >
+        <svg
+          class="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"
+          />
+        </svg>
+        برو به خانه
+      </a>
+      <a
+        href="{% url 'web:product_list' %}"
+        class="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-phema-text/20 dark:border-phema-text-dark/20 rounded-full font-medium hover:border-phema-green dark:hover:border-phema-gold hover:text-phema-green dark:hover:text-phema-gold transition-colors"
+      >
+        مشاهده محصولات
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

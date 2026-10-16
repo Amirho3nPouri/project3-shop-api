@@ -1,0 +1,140 @@
+{% extends 'shop/base.html' %} {% load static %} {% block title %}دسته‌بندی‌ها |
+PhemaPlant{% endblock %} {% block content %}
+
+<section class="py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h1
+        class="text-3xl md:text-4xl font-bold mb-4 text-phema-text dark:text-phema-text-dark"
+      >
+        دسته‌بندی‌ها 🏷️
+      </h1>
+      <p class="opacity-70">چی می‌خوای؟ ✧</p>
+    </div>
+
+    <!-- Loading -->
+    <div id="loading" class="text-center py-20">
+      <div
+        class="inline-block w-12 h-12 border-4 border-phema-green/20 border-t-phema-green rounded-full animate-spin"
+      ></div>
+      <p class="mt-4 opacity-70">در حال بارگذاری...</p>
+    </div>
+
+    <!-- Categories Grid -->
+    <div
+      id="categories-grid"
+      class="hidden grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+    ></div>
+
+    <!-- Empty State -->
+    <div id="empty-state" class="hidden text-center py-20">
+      <div class="text-9xl mb-6">🌱</div>
+      <h2 class="text-2xl font-bold mb-4">هنوز دسته‌بندی‌ای نداریم</h2>
+      <p class="opacity-70 mb-8">به‌زودی اضافه میشن!</p>
+      <a
+        href="{% url 'web:product_list' %}"
+        class="inline-flex items-center gap-2 px-8 py-4 bg-phema-green dark:bg-phema-gold text-white dark:text-phema-text rounded-full font-medium hover:bg-phema-green-light dark:hover:bg-phema-pot transition-all"
+      >
+        مشاهده همه محصولات
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %} {% block extra_js %}
+<script>
+  (function () {
+    const API_BASE = "/api";
+    const grid = document.getElementById("categories-grid");
+    const loading = document.getElementById("loading");
+    const emptyState = document.getElementById("empty-state");
+
+    // ایموجی برای هر دسته (بر اساس اسم)
+    const categoryEmojis = {
+      "گیاهان آپارتمانی": "🪴",
+      "گل‌های بریده": "💐",
+      "گلدان و سبد": "🏺",
+      "خاک و کود": "🌱",
+      "بذر و نهال": "🌰",
+      "لوازم جانبی": "🧴",
+    };
+
+    function getEmoji(name) {
+      for (const [key, emoji] of Object.entries(categoryEmojis)) {
+        if (name.includes(key)) return emoji;
+      }
+      return "🌿";
+    }
+
+    async function loadCategories() {
+      // نمایش Skeleton
+      loading.classList.add("hidden");
+      grid.classList.remove("hidden");
+      grid.innerHTML = "";
+      for (let i = 0; i < 8; i++) {
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = window.createCategorySkeleton();
+        grid.appendChild(wrapper.firstElementChild);
+      }
+
+      try {
+        const response = await fetch(`${API_BASE}/categories/`);
+        const data = await response.json();
+        const categories = data.results || data;
+
+        if (categories.length === 0) {
+          grid.classList.add("hidden");
+          emptyState.classList.remove("hidden");
+          return;
+        }
+
+        grid.innerHTML = "";
+        for (const cat of categories) {
+          const card = await createCategoryCard(cat);
+          grid.appendChild(card);
+        }
+      } catch (error) {
+        console.error("Error loading categories:", error);
+        grid.classList.add("hidden");
+        emptyState.classList.remove("hidden");
+      }
+    }
+
+    async function createCategoryCard(category) {
+      const div = document.createElement("a");
+      div.href = `/products/?category=${category.id}`;
+      div.className =
+        "group bg-white dark:bg-white/5 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1";
+
+      // تعداد محصولات این دسته
+      let productCount = 0;
+      try {
+        const res = await fetch(
+          `${API_BASE}/products/?category=${category.id}&page_size=1`,
+        );
+        const data = await res.json();
+        productCount = data.count || 0;
+      } catch (e) {
+        productCount = 0;
+      }
+
+      const emoji = getEmoji(category.name);
+
+      div.innerHTML = `
+            <div class="aspect-square bg-gradient-to-br from-phema-green/10 to-phema-gold/10 dark:from-phema-gold/5 dark:to-phema-green/5 flex items-center justify-center text-7xl md:text-8xl transition-transform duration-500 group-hover:scale-110">
+                ${emoji}
+            </div>
+            <div class="p-5 text-center">
+                <h3 class="font-bold text-lg mb-1 group-hover:text-phema-green dark:group-hover:text-phema-gold transition-colors">${category.name}</h3>
+                <p class="text-sm opacity-60">${productCount.toLocaleString("fa-IR")} محصول</p>
+            </div>
+        `;
+
+      return div;
+    }
+
+    loadCategories();
+  })();
+</script>
+{% endblock %}

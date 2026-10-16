@@ -1,9 +1,10 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+
 from .views import (
     CategoryViewSet, ProductViewSet,
     CartViewSet, CartItemViewSet, OrderViewSet,
-    RegisterView
+    RegisterView, ProfileView, ChangePasswordView,
 )
 
 router = DefaultRouter()
@@ -16,4 +17,6 @@ router.register(r'orders', OrderViewSet, basename='orders')
 urlpatterns = [
     path('', include(router.urls)),
     path('register/', RegisterView.as_view(), name='register'),
+    path('profile/', ProfileView.as_view(), name='profile'),
+    path('profile/change-password/', ChangePasswordView.as_view(), name='change-password'),
 ]

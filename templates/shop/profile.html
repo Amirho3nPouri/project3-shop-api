@@ -1,0 +1,628 @@
+{% extends 'shop/base.html' %} {% load static %} {% block title %}پروفایل من |
+PhemaPlant{% endblock %} {% block content %}
+
+<section class="py-12">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="mb-8">
+      <h1
+        class="text-3xl md:text-4xl font-bold mb-2 text-phema-text dark:text-phema-text-dark"
+      >
+        پروفایل من 👤
+      </h1>
+      <p class="opacity-70">اطلاعات حساب کاربریت</p>
+    </div>
+
+    <!-- Loading -->
+    <div id="loading" class="text-center py-20">
+      <div
+        class="inline-block w-12 h-12 border-4 border-phema-green/20 border-t-phema-green rounded-full animate-spin"
+      ></div>
+      <p class="mt-4 opacity-70">در حال بارگذاری...</p>
+    </div>
+
+    <!-- Not Logged In -->
+    <div id="not-logged-in" class="hidden text-center py-20">
+      <div class="text-9xl mb-6">🔒</div>
+      <h2 class="text-2xl font-bold mb-4">وارد حساب کاربریت شو</h2>
+      <p class="opacity-70 mb-8">برای دیدن پروفایلت، اول وارد شو.</p>
+      <a
+        href="{% url 'web:login' %}"
+        class="inline-flex items-center gap-2 px-8 py-4 bg-phema-green dark:bg-phema-gold text-white dark:text-phema-text rounded-full font-medium hover:bg-phema-green-light dark:hover:bg-phema-pot transition-all"
+      >
+        ورود
+      </a>
+    </div>
+
+    <!-- Profile Content -->
+    <div id="profile-content" class="hidden space-y-6">
+      <!-- User Info Card -->
+      <div
+        class="bg-white dark:bg-white/5 rounded-3xl p-8 shadow-sm transition-colors duration-500"
+      >
+        <div class="flex items-center gap-6 mb-8">
+          <!-- Avatar -->
+          <div
+            class="w-24 h-24 rounded-full bg-phema-green/10 dark:bg-phema-gold/10 flex items-center justify-center text-5xl flex-shrink-0"
+          >
+            🌿
+          </div>
+          <div class="flex-1 min-w-0">
+            <h2 id="profile-fullname" class="text-2xl font-bold mb-1 truncate">
+              ...
+            </h2>
+            <p id="profile-username" class="opacity-60" dir="ltr" style="text-align: right;">@...</p>          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 gap-4 mb-8">
+          <div
+            class="bg-phema-bg dark:bg-phema-bg-dark rounded-2xl p-4 text-center"
+          >
+            <div
+              id="profile-orders"
+              class="text-2xl font-bold text-phema-green dark:text-phema-gold"
+            >
+              ۰
+            </div>
+            <div class="text-sm opacity-60 mt-1">سفارش</div>
+          </div>
+          <div
+            class="bg-phema-bg dark:bg-phema-bg-dark rounded-2xl p-4 text-center"
+          >
+            <div
+              id="profile-spent"
+              class="text-2xl font-bold text-phema-green dark:text-phema-gold"
+            >
+              ۰
+            </div>
+            <div class="text-sm opacity-60 mt-1">تومان خرید</div>
+          </div>
+        </div>
+
+        <!-- Info Fields -->
+        <div class="space-y-4">
+          <div
+            class="flex items-center gap-3 py-3 border-b border-phema-text/5 dark:border-phema-gold/10"
+          >
+            <svg
+              class="w-5 h-5 opacity-60"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+              />
+              <path d="M22 6l-10 7L2 6" />
+            </svg>
+            <div class="flex-1">
+              <div class="text-xs opacity-60">ایمیل</div>
+              <div id="profile-email" class="font-medium">...</div>
+            </div>
+          </div>
+
+          <div
+            class="flex items-center gap-3 py-3 border-b border-phema-text/5 dark:border-phema-gold/10"
+          >
+            <svg
+              class="w-5 h-5 opacity-60"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <path d="M16 2v4M8 2v4M3 10h18" />
+            </svg>
+            <div class="flex-1">
+              <div class="text-xs opacity-60">تاریخ عضویت</div>
+              <div id="profile-joined" class="font-medium">...</div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 py-3">
+            <svg
+              class="w-5 h-5 opacity-60"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 6v6l4 2" />
+            </svg>
+            <div class="flex-1">
+              <div class="text-xs opacity-60">آخرین ورود</div>
+              <div id="profile-last-login" class="font-medium">...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="grid sm:grid-cols-2 gap-4">
+        <!-- Edit Profile -->
+        <button
+          id="edit-profile-btn"
+          class="bg-white dark:bg-white/5 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all text-right group"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="font-bold mb-1">ویرایش پروفایل</div>
+              <div class="text-sm opacity-60">نام و نام خانوادگی</div>
+            </div>
+            <svg
+              class="w-6 h-6 text-phema-green dark:text-phema-gold group-hover:scale-110 transition-transform"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+              <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+            </svg>
+          </div>
+        </button>
+
+        <!-- Change Password -->
+        <button
+          id="change-password-btn"
+          class="bg-white dark:bg-white/5 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all text-right group"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="font-bold mb-1">تغییر رمز عبور</div>
+              <div class="text-sm opacity-60">رمز جدید انتخاب کن</div>
+            </div>
+            <svg
+              class="w-6 h-6 text-phema-green dark:text-phema-gold group-hover:scale-110 transition-transform"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0110 0v4" />
+            </svg>
+          </div>
+        </button>
+      </div>
+
+      <!-- Logout -->
+      <button
+        id="logout-btn"
+        class="w-full py-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-2xl font-bold hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors flex items-center justify-center gap-2"
+      >
+        <svg
+          class="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"
+          />
+        </svg>
+        خروج از حساب
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Edit Profile Modal ==================== -->
+<div
+  id="edit-modal"
+  class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+>
+  <div
+    class="bg-white dark:bg-phema-bg-dark rounded-3xl p-8 max-w-md w-full shadow-2xl"
+  >
+    <h2 class="text-2xl font-bold mb-6">ویرایش پروفایل</h2>
+
+    <form id="edit-form" class="space-y-4">
+      <div
+        id="edit-error"
+        class="hidden bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm p-3 rounded-lg"
+      ></div>
+
+      <div>
+        <label class="block text-sm font-medium mb-2">نام</label>
+        <input
+          type="text"
+          id="edit-first-name"
+          class="w-full px-4 py-3 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-black/20 focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-2">نام خانوادگی</label>
+        <input
+          type="text"
+          id="edit-last-name"
+          class="w-full px-4 py-3 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-black/20 focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-2">ایمیل</label>
+        <input
+          type="email"
+          id="edit-email"
+          class="w-full px-4 py-3 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-black/20 focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
+        />
+      </div>
+
+      <div class="flex gap-3 pt-4">
+        <button
+          type="submit"
+          id="edit-submit"
+          class="flex-1 py-3 bg-phema-green dark:bg-phema-gold text-white dark:text-phema-text rounded-xl font-bold hover:bg-phema-green-light transition-colors"
+        >
+          ذخیره
+        </button>
+        <button
+          type="button"
+          id="edit-cancel"
+          class="px-6 py-3 border border-phema-text/20 dark:border-phema-gold/30 rounded-xl font-medium hover:bg-phema-text/5 dark:hover:bg-phema-gold/10 transition-colors"
+        >
+          لغو
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ==================== Change Password Modal ==================== -->
+<div
+  id="password-modal"
+  class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+>
+  <div
+    class="bg-white dark:bg-phema-bg-dark rounded-3xl p-8 max-w-md w-full shadow-2xl"
+  >
+    <h2 class="text-2xl font-bold mb-6">تغییر رمز عبور</h2>
+
+    <form id="password-form" class="space-y-4">
+      <div
+        id="password-error"
+        class="hidden bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm p-3 rounded-lg"
+      ></div>
+      <div
+        id="password-success"
+        class="hidden bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-sm p-3 rounded-lg"
+      ></div>
+
+      <div>
+        <label class="block text-sm font-medium mb-2">رمز عبور فعلی</label>
+        <input
+          type="password"
+          id="old-password"
+          required
+          class="w-full px-4 py-3 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-black/20 focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-2">رمز عبور جدید</label>
+        <input
+          type="password"
+          id="new-password"
+          required
+          minlength="8"
+          class="w-full px-4 py-3 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-black/20 focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
+        />
+        <p class="text-xs opacity-60 mt-1">حداقل ۸ کاراکتر، ترکیب حرف و عدد</p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-2">تایید رمز جدید</label>
+        <input
+          type="password"
+          id="new-password-confirm"
+          required
+          minlength="8"
+          class="w-full px-4 py-3 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-black/20 focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
+        />
+      </div>
+
+      <div class="flex gap-3 pt-4">
+        <button
+          type="submit"
+          id="password-submit"
+          class="flex-1 py-3 bg-phema-green dark:bg-phema-gold text-white dark:text-phema-text rounded-xl font-bold hover:bg-phema-green-light transition-colors"
+        >
+          تغییر رمز
+        </button>
+        <button
+          type="button"
+          id="password-cancel"
+          class="px-6 py-3 border border-phema-text/20 dark:border-phema-gold/30 rounded-xl font-medium hover:bg-phema-text/5 dark:hover:bg-phema-gold/10 transition-colors"
+        >
+          لغو
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %} {% block extra_js %}
+<script>
+  (function () {
+    const API_BASE = "/api";
+    const token = localStorage.getItem("access_token");
+
+    const loading = document.getElementById("loading");
+    const notLoggedIn = document.getElementById("not-logged-in");
+    const profileContent = document.getElementById("profile-content");
+
+    let currentUser = null;
+
+    // ==================== Load Profile ====================
+    async function loadProfile() {
+      if (!token) {
+        loading.classList.add("hidden");
+        notLoggedIn.classList.remove("hidden");
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE}/profile/`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (response.status === 401) {
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          window.location.href = "/login/";
+          return;
+        }
+
+        const user = await response.json();
+        currentUser = user;
+
+        renderProfile(user);
+
+        loading.classList.add("hidden");
+        profileContent.classList.remove("hidden");
+      } catch (error) {
+        console.error("Error loading profile:", error);
+        loading.classList.add("hidden");
+        notLoggedIn.classList.remove("hidden");
+      }
+    }
+
+    // ==================== Render Profile ====================
+    function renderProfile(user) {
+      const fullName =
+        `${user.first_name || ""} ${user.last_name || ""}`.trim() ||
+        user.username;
+      document.getElementById("profile-fullname").textContent = fullName;
+      document.getElementById("profile-username").textContent =
+        "@" + user.username;
+      document.getElementById("profile-email").textContent = user.email || "—";
+      document.getElementById("profile-orders").textContent = parseInt(
+        user.total_orders || 0,
+      ).toLocaleString("fa-IR");
+      document.getElementById("profile-spent").textContent = parseInt(
+        user.total_spent || 0,
+      ).toLocaleString("fa-IR");
+
+      const joined = new Date(user.date_joined).toLocaleDateString("fa-IR", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+      document.getElementById("profile-joined").textContent = joined;
+
+      if (user.last_login) {
+        const lastLogin = new Date(user.last_login).toLocaleDateString(
+          "fa-IR",
+          { year: "numeric", month: "long", day: "numeric" },
+        );
+        document.getElementById("profile-last-login").textContent = lastLogin;
+      } else {
+        document.getElementById("profile-last-login").textContent = "—";
+      }
+    }
+
+    // ==================== Edit Profile Modal ====================
+    const editModal = document.getElementById("edit-modal");
+
+    document
+      .getElementById("edit-profile-btn")
+      .addEventListener("click", () => {
+        document.getElementById("edit-first-name").value =
+          currentUser.first_name || "";
+        document.getElementById("edit-last-name").value =
+          currentUser.last_name || "";
+        document.getElementById("edit-email").value = currentUser.email || "";
+        document.getElementById("edit-error").classList.add("hidden");
+        editModal.classList.remove("hidden");
+      });
+
+    document.getElementById("edit-cancel").addEventListener("click", () => {
+      editModal.classList.add("hidden");
+    });
+
+    document
+      .getElementById("edit-form")
+      .addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const submitBtn = document.getElementById("edit-submit");
+        const errorEl = document.getElementById("edit-error");
+        errorEl.classList.add("hidden");
+        submitBtn.disabled = true;
+        submitBtn.textContent = "در حال ذخیره...";
+
+        try {
+          const response = await fetch(`${API_BASE}/profile/`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              first_name: document
+                .getElementById("edit-first-name")
+                .value.trim(),
+              last_name: document.getElementById("edit-last-name").value.trim(),
+              email: document.getElementById("edit-email").value.trim(),
+            }),
+          });
+
+          if (response.ok) {
+            const user = await response.json();
+            currentUser = user;
+            renderProfile(user);
+            editModal.classList.add("hidden");
+            showToast("✅ پروفایل با موفقیت ویرایش شد", "success");
+          } else {
+            const data = await response.json();
+            let msg = "خطا در ذخیره";
+            if (data.email) msg = "ایمیل: " + data.email.join(" ");
+            errorEl.textContent = msg;
+            errorEl.classList.remove("hidden");
+          }
+        } catch (error) {
+          errorEl.textContent = "خطای شبکه";
+          errorEl.classList.remove("hidden");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "ذخیره";
+        }
+      });
+
+    // ==================== Change Password Modal ====================
+    const passwordModal = document.getElementById("password-modal");
+
+    document
+      .getElementById("change-password-btn")
+      .addEventListener("click", () => {
+        document.getElementById("old-password").value = "";
+        document.getElementById("new-password").value = "";
+        document.getElementById("new-password-confirm").value = "";
+        document.getElementById("password-error").classList.add("hidden");
+        document.getElementById("password-success").classList.add("hidden");
+        passwordModal.classList.remove("hidden");
+      });
+
+    document.getElementById("password-cancel").addEventListener("click", () => {
+      passwordModal.classList.add("hidden");
+    });
+
+    document
+      .getElementById("password-form")
+      .addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const submitBtn = document.getElementById("password-submit");
+        const errorEl = document.getElementById("password-error");
+        const successEl = document.getElementById("password-success");
+
+        errorEl.classList.add("hidden");
+        successEl.classList.add("hidden");
+
+        const oldPassword = document.getElementById("old-password").value;
+        const newPassword = document.getElementById("new-password").value;
+        const newPasswordConfirm = document.getElementById(
+          "new-password-confirm",
+        ).value;
+
+        if (newPassword !== newPasswordConfirm) {
+          errorEl.textContent = "رمزهای جدید یکسان نیستن.";
+          errorEl.classList.remove("hidden");
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "در حال تغییر...";
+
+        try {
+          const response = await fetch(`${API_BASE}/profile/change-password/`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              old_password: oldPassword,
+              new_password: newPassword,
+              new_password_confirm: newPasswordConfirm,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            successEl.textContent = "✅ رمز عبور با موفقیت تغییر کرد!";
+            successEl.classList.remove("hidden");
+
+            setTimeout(() => {
+              passwordModal.classList.add("hidden");
+            }, 1500);
+          } else {
+            let msg = "خطا در تغییر رمز";
+            if (data.old_password)
+              msg = "رمز فعلی: " + data.old_password.join(" ");
+            else if (data.new_password)
+              msg = "رمز جدید: " + data.new_password.join(" ");
+            else if (data.new_password_confirm)
+              msg = "تایید رمز: " + data.new_password_confirm.join(" ");
+            else if (data.detail) msg = data.detail;
+
+            errorEl.textContent = msg;
+            errorEl.classList.remove("hidden");
+          }
+        } catch (error) {
+          errorEl.textContent = "خطای شبکه";
+          errorEl.classList.remove("hidden");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "تغییر رمز";
+        }
+      });
+
+    // ==================== Logout ====================
+    document.getElementById("logout-btn").addEventListener("click", () => {
+      if (!confirm("مطمئنی می‌خوای خارج بشی؟")) return;
+
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("user");
+
+      window.location.href = "/";
+    });
+
+    // ==================== Toast ====================
+    function showToast(message, type = "success") {
+      const toast = document.createElement("div");
+      toast.className = `fixed bottom-6 left-1/2 -translate-x-1/2 px-6 py-3 rounded-xl shadow-lg text-white font-medium z-50 transition-all ${
+        type === "success" ? "bg-phema-green" : "bg-red-500"
+      }`;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translate(-50%, 20px)";
+        setTimeout(() => toast.remove(), 300);
+      }, 2500);
+    }
+
+    // ==================== Close modal on backdrop click ====================
+    editModal.addEventListener("click", (e) => {
+      if (e.target === editModal) editModal.classList.add("hidden");
+    });
+    passwordModal.addEventListener("click", (e) => {
+      if (e.target === passwordModal) passwordModal.classList.add("hidden");
+    });
+
+    // ==================== Init ====================
+    loadProfile();
+  })();
+</script>
+{% endblock %}

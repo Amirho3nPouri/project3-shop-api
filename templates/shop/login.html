@@ -1,0 +1,165 @@
+{% extends 'shop/base.html' %} {% load static %} {% block title %}ورود |
+PhemaPlant{% endblock %} {% block content %}
+
+<section class="min-h-[80vh] flex items-center justify-center py-16 px-4">
+  <div class="w-full max-w-md">
+    <div
+      class="bg-white dark:bg-white/5 rounded-3xl shadow-xl p-8 md:p-10 transition-colors duration-500"
+    >
+      <!-- لوگو -->
+      <div class="text-center mb-8">
+        <img
+          src="{% static 'shop/img/logo.png' %}"
+          alt="PhemaPlant"
+          class="h-20 mx-auto mb-4"
+        />
+        <h1
+          class="text-2xl font-bold text-phema-text dark:text-phema-text-dark"
+        >
+          خوش برگشتی! 🌿
+        </h1>
+        <p class="text-sm opacity-70 mt-2">وارد حساب کاربریت شو</p>
+      </div>
+
+      <!-- فرم -->
+      <form id="login-form" class="space-y-5">
+        <!-- پیام خطا -->
+        <div
+          id="error-message"
+          class="hidden bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm p-3 rounded-lg border border-red-200 dark:border-red-800"
+        ></div>
+
+        <!-- یوزرنیم -->
+        <div>
+          <label
+            for="username"
+            class="block text-sm font-medium mb-2 text-phema-text dark:text-phema-text-dark"
+            >نام کاربری</label
+          >
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            autofocus
+            class="w-full px-4 py-3 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-phema-bg-dark focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
+            placeholder="نام کاربریت"
+          />
+        </div>
+
+        <!-- پسورد -->
+        <div>
+          <label
+            for="password"
+            class="block text-sm font-medium mb-2 text-phema-text dark:text-phema-text-dark"
+            >رمز عبور</label
+          >
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            class="w-full px-4 py-3 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-phema-bg-dark focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
+            placeholder="رمزت"
+          />
+        </div>
+
+        <!-- فراموشی رمز -->
+        <div class="text-left">
+          <a
+            href="/api/password-reset/"
+            class="text-xs text-phema-green dark:text-phema-gold hover:underline transition-colors"
+            >رمزت رو فراموش کردی؟</a
+          >
+        </div>
+
+        <!-- دکمه ورود -->
+        <button
+          type="submit"
+          id="submit-btn"
+          class="w-full py-3.5 bg-phema-green dark:bg-phema-gold text-white dark:text-phema-text rounded-xl font-bold hover:bg-phema-green-light dark:hover:bg-phema-pot transition-all duration-300 hover:shadow-lg"
+        >
+          ورود 🌱
+        </button>
+      </form>
+
+      <!-- لینک ثبت‌نام -->
+      <p class="text-center text-sm mt-6 opacity-70">
+        حساب نداری؟
+        <a
+          href="{% url 'web:register' %}"
+          class="text-phema-green dark:text-phema-gold font-bold hover:underline transition-colors"
+          >ثبت‌نام کن</a
+        >
+      </p>
+    </div>
+  </div>
+</section>
+
+{% endblock %} {% block extra_js %}
+<script>
+  document
+    .getElementById("login-form")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById("submit-btn");
+      const errorMessage = document.getElementById("error-message");
+
+      errorMessage.classList.add("hidden");
+      errorMessage.textContent = "";
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "در حال ورود...";
+
+      const formData = {
+        username: document.getElementById("username").value.trim(),
+        password: document.getElementById("password").value,
+      };
+
+      try {
+        const response = await fetch("/api/token/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // ذخیره توکن‌ها
+          localStorage.setItem("access_token", data.access);
+          localStorage.setItem("refresh_token", data.refresh);
+
+          submitBtn.textContent = "ورود موفق! ✅";
+          submitBtn.classList.remove("bg-phema-green", "dark:bg-phema-gold");
+          submitBtn.classList.add("bg-green-600");
+
+          // ریدایرکت به صفحه اصلی
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 800);
+        } else {
+          let errorText = "نام کاربری یا رمز عبور اشتباهه.";
+
+          if (data.detail) {
+            errorText = data.detail;
+          }
+
+          errorMessage.textContent = errorText;
+          errorMessage.classList.remove("hidden");
+
+          submitBtn.disabled = false;
+          submitBtn.textContent = "ورود 🌱";
+        }
+      } catch (error) {
+        errorMessage.textContent = "خطای شبکه. لطفاً اتصالت رو چک کن.";
+        errorMessage.classList.remove("hidden");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "ورود 🌱";
+      }
+    });
+</script>
+{% endblock %}

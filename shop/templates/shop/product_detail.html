@@ -1,0 +1,360 @@
+{% extends 'shop/base.html' %} {% load static %} {% block title %}جزئیات محصول |
+PhemaPlant{% endblock %} {% block content %}
+
+<section class="py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Breadcrumb -->
+    <nav class="mb-8 text-sm opacity-70">
+      <a
+        href="{% url 'web:home' %}"
+        class="hover:text-phema-green dark:hover:text-phema-gold transition-colors"
+        >خانه</a
+      >
+      <span class="mx-2">›</span>
+      <a
+        href="{% url 'web:product_list' %}"
+        class="hover:text-phema-green dark:hover:text-phema-gold transition-colors"
+        >محصولات</a
+      >
+      <span class="mx-2">›</span>
+      <span id="breadcrumb-name">...</span>
+    </nav>
+
+    <!-- Loading -->
+    <div id="loading" class="text-center py-20">
+      <div
+        class="inline-block w-12 h-12 border-4 border-phema-green/20 border-t-phema-green rounded-full animate-spin"
+      ></div>
+      <p class="mt-4 opacity-70">در حال بارگذاری...</p>
+    </div>
+
+    <!-- Error State -->
+    <div id="error-state" class="hidden text-center py-20">
+      <div class="text-9xl mb-8">🌱</div>
+      <h1
+        class="text-6xl font-bold text-phema-green dark:text-phema-gold mb-4 transition-colors"
+      >
+        ۴۰۴
+      </h1>
+      <h2 class="text-2xl font-bold mb-4">این محصول پیدا نشد</h2>
+      <p class="opacity-70 mb-8 leading-relaxed max-w-md mx-auto">
+        مثل یه گیاهی که تو گلدونش نیست، این محصول هم اینجا نیست! 🌿
+        <br />
+        شاید حذف شده یا آدرس اشتباهه.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="{% url 'web:home' %}"
+          class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-phema-green dark:bg-phema-gold text-white dark:text-phema-text rounded-full font-medium hover:bg-phema-green-light dark:hover:bg-phema-pot transition-all"
+        >
+          برو به خانه
+        </a>
+        <a
+          href="{% url 'web:product_list' %}"
+          class="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-phema-text/20 dark:border-phema-text-dark/20 rounded-full font-medium hover:border-phema-green dark:hover:border-phema-gold hover:text-phema-green dark:hover:text-phema-gold transition-colors"
+        >
+          مشاهده محصولات
+        </a>
+      </div>
+    </div>
+
+    <!-- Product Detail -->
+    <div id="product-detail" class="hidden grid md:grid-cols-2 gap-12 mb-20">
+      <!-- Image -->
+      <div class="relative">
+        <div
+          class="aspect-square bg-phema-green/10 dark:bg-phema-gold/5 rounded-3xl flex items-center justify-center text-9xl overflow-hidden shadow-lg"
+        >
+          <img
+            id="product-image"
+            src=""
+            alt=""
+            class="hidden w-full h-full object-cover"
+          />
+          <span id="product-emoji">🌱</span>
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div>
+        <a
+          id="product-category"
+          href="#"
+          class="inline-block px-4 py-1 bg-phema-green/10 dark:bg-phema-gold/10 text-phema-green dark:text-phema-gold rounded-full text-sm mb-4 transition-colors hover:bg-phema-green hover:text-white"
+        >
+          ...
+        </a>
+
+        <h1
+          id="product-name"
+          class="text-3xl md:text-4xl font-bold mb-4 text-phema-text dark:text-phema-text-dark"
+        >
+          ...
+        </h1>
+
+        <p
+          id="product-description"
+          class="text-lg opacity-70 mb-8 leading-relaxed"
+        ></p>
+
+        <div class="mb-6">
+          <div class="flex items-baseline gap-3">
+            <span
+              id="product-price"
+              class="text-3xl font-bold text-phema-green dark:text-phema-gold transition-colors"
+            ></span>
+            <span class="text-sm opacity-60">تومان</span>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <span id="product-stock" class="text-sm"></span>
+        </div>
+
+        <div class="flex items-center gap-4 mb-8">
+          <span class="text-sm font-medium">تعداد:</span>
+          <div
+            class="flex items-center gap-2 bg-white dark:bg-white/5 rounded-full p-1 border border-phema-text/10 dark:border-phema-gold/20"
+          >
+            <button
+              id="qty-minus"
+              class="w-10 h-10 rounded-full hover:bg-phema-green hover:text-white transition-colors flex items-center justify-center text-xl"
+            >
+              −
+            </button>
+            <span id="qty-value" class="w-10 text-center font-bold">1</span>
+            <button
+              id="qty-plus"
+              class="w-10 h-10 rounded-full hover:bg-phema-green hover:text-white transition-colors flex items-center justify-center text-xl"
+            >
+              +
+            </button>
+          </div>
+        </div>
+
+        <!-- Add to Cart Button with Animation -->
+        <button
+          id="add-to-cart-btn"
+          class="add-to-cart-btn large w-full py-4 bg-phema-green dark:bg-phema-gold text-white dark:text-phema-text rounded-2xl font-bold text-lg transition-all duration-300 hover:shadow-xl relative overflow-visible"
+          data-product-id=""
+        >
+          <span class="cart-plant">🪴</span>
+          <span class="cart-box">📦</span>
+          <span class="btn-text flex items-center justify-center gap-3">
+            <svg
+              class="w-6 h-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M8 14h8l1 7H7l1-7z" />
+              <path d="M7 14c0-1 1-2 2-2h6c1 0 2 1 2 2" />
+              <path d="M12 12V6" />
+              <path d="M12 8c-2-1-3-3-3-4 2 0 3 1 3 3" />
+              <path d="M12 7c2-1 3-3 3-4-2 0-3 1-3 3" />
+            </svg>
+            افزودن به سبد خرید
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Similar Products -->
+    <section id="similar-section" class="hidden">
+      <h2 class="text-2xl font-bold mb-8">محصولات مشابه</h2>
+      <div
+        id="similar-products"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      ></div>
+    </section>
+  </div>
+</section>
+
+{% endblock %} {% block extra_js %}
+<script>
+  (function () {
+    const API_BASE = "/api";
+    const slug = "{{ slug }}";
+
+    const loading = document.getElementById("loading");
+    const errorState = document.getElementById("error-state");
+    const productDetail = document.getElementById("product-detail");
+    const similarSection = document.getElementById("similar-section");
+    const similarProducts = document.getElementById("similar-products");
+
+    let currentProduct = null;
+    let quantity = 1;
+
+    // ==================== Load Product ====================
+    async function loadProduct() {
+      try {
+        let response = await fetch(`${API_BASE}/products/${slug}/`);
+
+        if (!response.ok && !isNaN(slug)) {
+          response = await fetch(`${API_BASE}/products/${slug}/`);
+        }
+
+        if (!response.ok) {
+          showError();
+          return;
+        }
+
+        const product = await response.json();
+        currentProduct = product;
+
+        renderProduct(product);
+        loadSimilarProducts(product.category);
+
+        loading.classList.add("hidden");
+        productDetail.classList.remove("hidden");
+      } catch (error) {
+        console.error("Error loading product:", error);
+        showError();
+      }
+    }
+
+    // ==================== Show Error ====================
+    function showError() {
+      loading.classList.add("hidden");
+      errorState.classList.remove("hidden");
+      document.title = "محصول پیدا نشد | PhemaPlant";
+      document.getElementById("breadcrumb-name").textContent = "پیدا نشد";
+    }
+
+    // ==================== Render Product ====================
+    function renderProduct(product) {
+      document.title = `${product.name} | PhemaPlant`;
+      document.getElementById("breadcrumb-name").textContent = product.name;
+
+      // Image
+      if (product.image) {
+        const img = document.getElementById("product-image");
+        img.src = product.image;
+        img.alt = product.name;
+        img.classList.remove("hidden");
+        document.getElementById("product-emoji").classList.add("hidden");
+      }
+
+      // Category
+      if (product.category_name) {
+        const catLink = document.getElementById("product-category");
+        catLink.textContent = product.category_name;
+        catLink.href = `/products/?category=${product.category}`;
+      } else {
+        document.getElementById("product-category").style.display = "none";
+      }
+
+      // Name & Description
+      document.getElementById("product-name").textContent = product.name;
+      document.getElementById("product-description").textContent =
+        product.description || "توضیحاتی برای این محصول ثبت نشده.";
+
+      // Price
+      const price = parseInt(product.price).toLocaleString("fa-IR");
+      document.getElementById("product-price").textContent = price;
+
+      // Stock
+      const stockEl = document.getElementById("product-stock");
+      if (product.is_available && product.stock > 0) {
+        stockEl.innerHTML = `<span class="text-green-600 dark:text-green-400">✓ موجود در انبار (${product.stock} عدد)</span>`;
+      } else {
+        stockEl.innerHTML = `<span class="text-red-500">✗ ناموجود</span>`;
+        document.getElementById("add-to-cart-btn").disabled = true;
+        document
+          .getElementById("add-to-cart-btn")
+          .classList.add("opacity-50", "cursor-not-allowed");
+      }
+
+      // ذخیره‌ی product id تو دکمه
+      document.getElementById("add-to-cart-btn").dataset.productId = product.id;
+    }
+
+    // ==================== Load Similar Products ====================
+    async function loadSimilarProducts(categoryId) {
+      if (!categoryId) return;
+
+      try {
+        const response = await fetch(
+          `${API_BASE}/products/?category=${categoryId}`,
+        );
+        const data = await response.json();
+        const products = (data.results || data)
+          .filter((p) => p.slug !== slug)
+          .slice(0, 4);
+
+        if (products.length === 0) return;
+
+        similarProducts.innerHTML = "";
+        products.forEach((product) => {
+          similarProducts.appendChild(createProductCard(product));
+        });
+
+        similarSection.classList.remove("hidden");
+      } catch (error) {
+        console.error("Error loading similar products:", error);
+      }
+    }
+
+    // ==================== Create Product Card ====================
+    function createProductCard(product) {
+      const div = document.createElement("div");
+      div.className =
+        "group bg-white dark:bg-white/5 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300";
+
+      const price = parseInt(product.price).toLocaleString("fa-IR");
+
+      div.innerHTML = `
+            <a href="/products/${product.slug}/" class="block">
+                <div class="aspect-square bg-phema-green/10 dark:bg-phema-gold/5 flex items-center justify-center text-6xl overflow-hidden">
+                    ${
+                      product.image
+                        ? `<img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">`
+                        : "🌱"
+                    }
+                </div>
+            </a>
+            <div class="p-5">
+                <a href="/products/${product.slug}/">
+                    <h3 class="font-bold mb-2 group-hover:text-phema-green dark:group-hover:text-phema-gold transition-colors">${product.name}</h3>
+                </a>
+                <div class="flex justify-between items-center mt-3">
+                    <span class="text-lg font-bold text-phema-green dark:text-phema-gold transition-colors">${price} تومان</span>
+                </div>
+            </div>
+        `;
+
+      return div;
+    }
+
+    // ==================== Quantity Controls ====================
+    document.getElementById("qty-minus").addEventListener("click", () => {
+      if (quantity > 1) {
+        quantity--;
+        document.getElementById("qty-value").textContent = quantity;
+      }
+    });
+
+    document.getElementById("qty-plus").addEventListener("click", () => {
+      if (currentProduct && quantity < currentProduct.stock) {
+        quantity++;
+        document.getElementById("qty-value").textContent = quantity;
+      }
+    });
+
+    // ==================== Add to Cart ====================
+    document
+      .getElementById("add-to-cart-btn")
+      .addEventListener("click", function () {
+        if (!currentProduct) return;
+        if (this.disabled) return;
+        window.addToCartAnimated(currentProduct.id, this, quantity);
+      });
+
+    // ==================== Init ====================
+    loadProduct();
+  })();
+</script>
+{% endblock %}

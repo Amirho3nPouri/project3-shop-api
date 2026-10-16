@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}PhemaPlant{% endblock %}</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Vazirmatn Font -->
+    <link
+      href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <!-- Custom CSS -->
+    <link
+      rel="stylesheet"
+      href="{% load static %}{% static 'shop/css/style.css' %}"
+    />
+
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              phema: {
+                bg: "#F5F0E8",
+                text: "#3D2817",
+                green: "#4A5D3A",
+                pot: "#B87333",
+                cream: "#F8F5EE",
+              },
+            },
+            fontFamily: {
+              vazir: ["Vazirmatn", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-phema-bg text-phema-text font-vazir">
+    {% block content %}{% endblock %}
+  </body>
+</html>

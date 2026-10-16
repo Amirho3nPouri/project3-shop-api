@@ -1,0 +1,450 @@
+/* ==================== PhemaPlant Custom Styles ==================== */
+
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==================== Dark Mode — نور اباژور ==================== */
+
+.dark body {
+  background-color: #0a0e0a;
+  background-image: radial-gradient(
+    ellipse 70% 50% at 50% 0%,
+    rgba(255, 200, 120, 0.12) 0%,
+    rgba(255, 200, 120, 0.03) 30%,
+    transparent 60%
+  );
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+.dark #petals,
+.dark #petals-mobile {
+  transform: scale(0.3) rotate(180deg);
+}
+
+.dark nav img {
+  filter: drop-shadow(0 0 15px rgba(255, 200, 120, 0.3));
+}
+
+.dark nav {
+  border-bottom-color: rgba(255, 200, 120, 0.15) !important;
+}
+
+.dark .bg-white\/50 {
+  background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+.dark .bg-white\/30 {
+  background-color: rgba(255, 255, 255, 0.01) !important;
+}
+
+.dark .bg-white {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* ==================== Scrollbar ==================== */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f0e8;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #0a0e0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a5d3a;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b87333;
+}
+
+/* ==================== Selection ==================== */
+
+::selection {
+  background-color: #ffc878;
+  color: #3d2817;
+}
+
+/* ==================== Focus Ring ==================== */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid #ffc878;
+  outline-offset: 2px;
+}
+
+/* ==================== 404 Page ==================== */
+
+.question-mark {
+  animation: questionFloat 2s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+@keyframes questionFloat {
+  0% {
+    transform: translateY(0) rotate(-3deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-8px) rotate(3deg);
+    opacity: 1;
+  }
+}
+
+/* ==================== 500 Page ==================== */
+
+.exclamation-mark {
+  animation: exclamationShake 1.5s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes exclamationShake {
+  0%,
+  100% {
+    transform: rotate(-5deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: rotate(5deg);
+    opacity: 1;
+  }
+}
+
+/* ==================== Add to Cart Animation v2 ==================== */
+
+.add-to-cart-btn {
+  position: relative;
+  overflow: visible;
+  transition: all 0.3s ease;
+}
+
+.add-to-cart-btn .btn-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.cart-plant {
+  position: absolute;
+  font-size: 1.5rem;
+  top: 50%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.cart-box {
+  position: absolute;
+  top: 50%;
+  right: 15%;
+  transform: translateY(-50%) scale(0);
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.25);
+  border: 2px dashed rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.add-to-cart-btn.animating .cart-plant {
+  animation: plantJourney 1.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes plantJourney {
+  0% {
+    opacity: 0;
+    left: 20%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
+  }
+  15% {
+    opacity: 1;
+    left: 25%;
+    top: 40%;
+    transform: translate(-50%, -50%) scale(1.1) rotate(45deg);
+  }
+  50% {
+    opacity: 1;
+    left: 50%;
+    top: 20%;
+    transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
+  }
+  85% {
+    opacity: 1;
+    left: 78%;
+    top: 40%;
+    transform: translate(-50%, -50%) scale(0.9) rotate(315deg);
+  }
+  100% {
+    opacity: 0.2;
+    left: 85%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.5) rotate(360deg);
+  }
+}
+
+.add-to-cart-btn.animating .cart-box {
+  animation:
+    boxAppear 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s forwards,
+    boxShake 0.3s ease 1.2s,
+    boxDisappear 0.3s ease 1.4s forwards;
+}
+
+@keyframes boxAppear {
+  0% {
+    transform: translateY(-50%) scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes boxShake {
+  0%,
+  100% {
+    transform: translateY(-50%) scale(1) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-50%) scale(1.15) rotate(-10deg);
+  }
+  75% {
+    transform: translateY(-50%) scale(1.15) rotate(10deg);
+  }
+}
+
+@keyframes boxDisappear {
+  0% {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-50%) scale(0);
+    opacity: 0;
+  }
+}
+
+.add-to-cart-btn.animating .btn-text {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.add-to-cart-btn.success {
+  background-color: #16a34a !important;
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(22, 163, 74, 0.5);
+}
+
+.add-to-cart-btn.success .btn-text {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.add-to-cart-btn.small .cart-plant {
+  font-size: 1.2rem;
+}
+.add-to-cart-btn.small .cart-box {
+  width: 28px;
+  height: 28px;
+  font-size: 0.85rem;
+  right: 10%;
+}
+.add-to-cart-btn.large .cart-plant {
+  font-size: 2.5rem;
+  left: 15%;
+}
+.add-to-cart-btn.large .cart-box {
+  width: 60px;
+  height: 60px;
+  font-size: 1.8rem;
+  right: 10%;
+}
+
+/* ==================== Skeleton Loading ==================== */
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+.dark .skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  background-size: 200% 100%;
+}
+
+@keyframes skeletonShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-card {
+  background-color: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.dark .skeleton-card {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.skeleton-image {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+}
+
+.skeleton-text {
+  height: 16px;
+  margin-bottom: 8px;
+}
+.skeleton-text-sm {
+  height: 12px;
+  width: 60%;
+}
+.skeleton-title {
+  height: 20px;
+  width: 80%;
+  margin-bottom: 12px;
+}
+
+/* ==================== Scroll Reveal Animations ==================== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition:
+    opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-right.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(60px);
+  transition:
+    opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-left.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.reveal-scale.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.reveal-delay-1 {
+  transition-delay: 0.1s;
+}
+.reveal-delay-2 {
+  transition-delay: 0.2s;
+}
+.reveal-delay-3 {
+  transition-delay: 0.3s;
+}
+.reveal-delay-4 {
+  transition-delay: 0.4s;
+}
+.reveal-delay-5 {
+  transition-delay: 0.5s;
+}
+.reveal-delay-6 {
+  transition-delay: 0.6s;
+}
+
+/* ==================== Parallax ==================== */
+
+.parallax {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* ==================== Scroll Progress Bar ==================== */
+
+#scroll-progress {
+  box-shadow: 0 0 10px rgba(255, 200, 120, 0.5);
+}
+
+/* ==================== Lenis ==================== */
+
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
