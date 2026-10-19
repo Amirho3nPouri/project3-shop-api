@@ -7,3 +7,5 @@ django-cors-headers>=4.3
 python-decouple>=3.8
 Pillow>=10.0
 argon2-cffi>=23.1
+
+# Updated for PhemaPlant
