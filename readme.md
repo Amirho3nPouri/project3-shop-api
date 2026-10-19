@@ -24,7 +24,7 @@
 
 ## 📸 اسکرین‌شات
 
-![alt text](image.png)
+![PhemaPlant](image.png)
 
 ---
 
