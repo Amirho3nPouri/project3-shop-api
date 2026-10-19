@@ -24,7 +24,7 @@
 
 ## 📸 اسکرین‌شات
 
-> **TODO:** اسکرین‌شات‌ها رو بعداً اضافه کن.
+![alt text](image.png)
 
 ---
 
@@ -34,12 +34,13 @@
 
 - ✅ مدیریت محصولات (CRUD)
 - ✅ دسته‌بندی محصولات
+- ✅ محصولات ویژه (Featured)
 - ✅ سبد خرید کامل
 - ✅ ثبت سفارش
 - ✅ تاریخچه سفارش‌ها
 - ✅ فیلتر، جستجو، مرتب‌سازی
 - ✅ صفحه‌بندی
-- ✅ گالری تصاویر (آینده)
+- ✅ اسکرول افقی محصولات ویژه
 
 ### 👤 کاربران
 
@@ -64,7 +65,9 @@
 - ✅ انیمیشن Add to Cart
 - ✅ Toast Notification
 - ✅ منوی موبایل
+- ✅ دکمه‌ی چشم برای رمز
 - ✅ صفحه ۴۰۴ و ۵۰۰ سفارشی
+- ✅ صفحه درباره ما، تماس، سوالات متداول، شرایط ارسال، حریم خصوصی
 
 ### 🔐 امنیت
 
@@ -79,6 +82,7 @@
 - ✅ CORS
 - ✅ Secret Management (`.env`)
 - ✅ Logging
+- ✅ کیت امنیتی کامل (`docs/security/`)
 
 ### 📚 مستندات
 
@@ -124,71 +128,3 @@
 ---
 
 ## 📂 ساختار پروژه
-
-project3/
-├── config/
-│ ├── settings.py # تنظیمات
-│ ├── urls.py # URLهای اصلی
-│ └── ...
-├── shop/
-│ ├── models.py # مدل‌ها
-│ ├── serializers.py # سریالایزرها
-│ ├── views.py # API ViewSetها
-│ ├── urls.py # URLهای API
-│ ├── web_views.py # ویوهای HTML
-│ ├── web_urls.py # URLهای HTML
-│ ├── admin.py # پنل ادمین
-│ ├── tests.py # ۳۰ تست
-│ ├── templates/
-│ │ └── shop/
-│ │ ├── base.html # تمپلیت پایه
-│ │ ├── home.html
-│ │ ├── product_list.html
-│ │ ├── product_detail.html
-│ │ ├── category_list.html
-│ │ ├── cart.html
-│ │ ├── orders.html
-│ │ ├── login.html
-│ │ ├── register.html
-│ │ ├── profile.html
-│ │ ├── about.html
-│ │ ├── contact.html
-│ │ ├── faq.html
-│ │ ├── shipping.html
-│ │ ├── privacy.html
-│ │ ├── 404.html
-│ │ └── 500.html
-│ └── static/
-│ └── shop/
-│ ├── css/style.css
-│ ├── js/main.js
-│ └── img/logo.png
-├── templates/
-│ └── registration/ # تمپلیت‌های Password Reset
-├── docs/
-│ └── security/ # کیت امنیتی
-├── logs/ # لاگ‌ها
-├── media/ # فایل‌های آپلودی
-├── staticfiles/ # فایل‌های استاتیک (collectstatic)
-├── .env # متغیرهای محیطی (تو گیت نیست)
-├── .env.example # نمونه
-├── .gitignore
-├── manage.py
-├── requirements.txt
-└── README.md
-
----
-
-## 🚀 نصب و راه‌اندازی
-
-### پیش‌نیازها
-
-- Python 3.13+
-- Git
-
-### ۱. کلون کردن پروژه
-
-```bash
-git clone https://github.com/Amirho3nPouri/project3-shop-api.git
-cd project3-shop-api
-```
