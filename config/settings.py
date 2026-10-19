@@ -77,6 +77,18 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators
 
+# ==================== Password Hashing ====================
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
+
+
+# ==================== Password Validation ====================
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -110,9 +122,12 @@ USE_TZ = True
 # ==================== Static & Media ====================
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static',
+# ]
+
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
@@ -215,6 +230,16 @@ SECURE_HSTS_SECONDS = 31536000 if not DEBUG else 0
 SECURE_HSTS_INCLUDE_SUBDOMAINS = not DEBUG
 SECURE_HSTS_PRELOAD = not DEBUG
 
+# ==================== Password Hashing ====================
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
+
+
 # ==================== Cache ====================
 
 CACHES = {
@@ -299,13 +324,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:4200',
 ]
 
-# تو پروداکشن، دامنه‌ی واقعی رو اضافه کن:
-# CORS_ALLOWED_ORIGINS += [
-#     'https://yourdomain.com',
-#     'https://www.yourdomain.com',
-# ]
 
-# تو حالت DEBUG، همه‌ی دامنه‌ها مجازن (فقط برای توسعه!)
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 
@@ -339,14 +358,6 @@ SITE_ID = 1
 
 # ==================== Email ====================
 
-# تو لوکال، ایمیل تو کنسول چاپ میشه
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'noreply@amirshop.ir'
 
-# تو پروداکشن، اینا رو فعال کن:
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
-# EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')

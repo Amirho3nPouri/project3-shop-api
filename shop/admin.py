@@ -11,11 +11,11 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'price', 'stock', 'is_available', 'created_at')
-    list_filter = ('is_available', 'category', 'created_at')
+    list_display = ('name', 'category', 'price', 'stock', 'is_available', 'is_featured', 'created_at')
+    list_filter = ('is_available', 'is_featured', 'category', 'created_at') 
     search_fields = ('name', 'description')
     prepopulated_fields = {'slug': ('name',)}
-    list_editable = ('price', 'stock', 'is_available')
+    list_editable = ('price', 'stock', 'is_available', 'is_featured') 
 
 
 class CartItemInline(admin.TabularInline):

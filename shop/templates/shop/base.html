@@ -8,30 +8,24 @@
       {% block title %}PhemaPlant — گل برای گل‌های فیما{% endblock %}
     </title>
 
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="{% static 'shop/img/logo.png' %}" />
 
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Vazirmatn Font -->
     <link
       href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css"
       rel="stylesheet"
       type="text/css"
     />
 
-    <!-- Lenis (Smooth Scroll) -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/lenis@1.1.13/dist/lenis.css"
     />
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'shop/css/style.css' %}" />
 
-    <!-- Tailwind Config -->
     <script>
       tailwind.config = {
         darkMode: "class",
@@ -113,12 +107,12 @@
               >دسته‌بندی‌ها</a
             >
             <a
-              href="#"
+              href="{% url 'web:about' %}"
               class="text-sm font-medium hover:text-phema-green dark:hover:text-phema-gold transition-colors"
               >درباره ما</a
             >
             <a
-              href="#"
+              href="{% url 'web:contact' %}"
               class="text-sm font-medium hover:text-phema-green dark:hover:text-phema-gold transition-colors"
               >تماس</a
             >
@@ -341,7 +335,7 @@
             <span class="font-medium">دسته‌بندی‌ها</span>
           </a>
           <a
-            href="#"
+            href="{% url 'web:about' %}"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-phema-green/10 dark:hover:bg-phema-gold/10 transition-colors"
           >
             <svg
@@ -357,7 +351,7 @@
             <span class="font-medium">درباره ما</span>
           </a>
           <a
-            href="#"
+            href="{% url 'web:contact' %}"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-phema-green/10 dark:hover:bg-phema-gold/10 transition-colors"
           >
             <svg
@@ -514,7 +508,9 @@
                 >
               </li>
               <li>
-                <a href="#" class="hover:text-phema-gold transition-colors"
+                <a
+                  href="{% url 'web:about' %}"
+                  class="hover:text-phema-gold transition-colors"
                   >درباره ما</a
                 >
               </li>
@@ -525,22 +521,30 @@
             <h3 class="font-bold mb-4">خدمات مشتریان</h3>
             <ul class="space-y-2 text-sm opacity-80">
               <li>
-                <a href="#" class="hover:text-phema-gold transition-colors"
+                <a
+                  href="{% url 'web:contact' %}"
+                  class="hover:text-phema-gold transition-colors"
                   >تماس با ما</a
                 >
               </li>
               <li>
-                <a href="#" class="hover:text-phema-gold transition-colors"
+                <a
+                  href="{% url 'web:faq' %}"
+                  class="hover:text-phema-gold transition-colors"
                   >سوالات متداول</a
                 >
               </li>
               <li>
-                <a href="#" class="hover:text-phema-gold transition-colors"
+                <a
+                  href="{% url 'web:shipping' %}"
+                  class="hover:text-phema-gold transition-colors"
                   >شرایط ارسال</a
                 >
               </li>
               <li>
-                <a href="#" class="hover:text-phema-gold transition-colors"
+                <a
+                  href="{% url 'web:privacy' %}"
+                  class="hover:text-phema-gold transition-colors"
                   >حریم خصوصی</a
                 >
               </li>

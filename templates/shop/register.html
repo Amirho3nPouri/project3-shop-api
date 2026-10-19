@@ -6,7 +6,6 @@ PhemaPlant{% endblock %} {% block content %}
     <div
       class="bg-white dark:bg-white/5 rounded-3xl shadow-xl p-8 md:p-10 transition-colors duration-500"
     >
-      <!-- لوگو -->
       <div class="text-center mb-8">
         <img
           src="{% static 'shop/img/logo.png' %}"
@@ -23,7 +22,6 @@ PhemaPlant{% endblock %} {% block content %}
         </p>
       </div>
 
-      <!-- پیام موفقیت -->
       <div
         id="success-message"
         class="hidden bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-sm p-4 rounded-xl border border-green-200 dark:border-green-800 text-center"
@@ -33,15 +31,13 @@ PhemaPlant{% endblock %} {% block content %}
         <p class="text-xs opacity-80">در حال انتقال به صفحه ورود...</p>
       </div>
 
-      <!-- فرم -->
       <form id="register-form" class="space-y-5" novalidate>
-        <!-- پیام خطا -->
         <div
           id="error-message"
           class="hidden bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm p-4 rounded-xl border border-red-200 dark:border-red-800"
+          style="white-space: pre-line"
         ></div>
 
-        <!-- یوزرنیم -->
         <div>
           <label
             for="username"
@@ -57,7 +53,6 @@ PhemaPlant{% endblock %} {% block content %}
           />
         </div>
 
-        <!-- ایمیل -->
         <div>
           <label
             for="email"
@@ -73,7 +68,6 @@ PhemaPlant{% endblock %} {% block content %}
           />
         </div>
 
-        <!-- نام و نام خانوادگی -->
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label
@@ -105,39 +99,110 @@ PhemaPlant{% endblock %} {% block content %}
           </div>
         </div>
 
-        <!-- پسورد -->
         <div>
           <label
             for="password"
             class="block text-sm font-medium mb-2 text-phema-text dark:text-phema-text-dark"
             >رمز عبور <span class="text-red-500">*</span></label
           >
-          <input
-            type="password"
-            id="password"
-            name="password"
-            class="w-full px-4 py-3 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-phema-bg-dark focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
-            placeholder="حداقل ۸ کاراکتر (ترکیب حرف و عدد)"
-          />
+          <div class="relative">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="w-full px-4 py-3 pl-12 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-phema-bg-dark focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
+              placeholder="حداقل ۸ کاراکتر (ترکیب حرف و عدد)"
+            />
+            <button
+              type="button"
+              id="toggle-password"
+              class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full hover:bg-phema-text/5 dark:hover:bg-phema-gold/10 transition-colors"
+              title="نمایش/مخفی"
+            >
+              <svg
+                id="eye-closed"
+                class="w-5 h-5 text-phema-text/40 dark:text-phema-text-dark/40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                />
+                <line x1="1" y1="1" x2="23" y2="23" />
+              </svg>
+              <svg
+                id="eye-open"
+                class="w-5 h-5 text-phema-green dark:text-phema-gold hidden"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+          </div>
         </div>
 
-        <!-- تایید پسورد -->
         <div>
           <label
             for="password_confirm"
             class="block text-sm font-medium mb-2 text-phema-text dark:text-phema-text-dark"
             >تایید رمز عبور <span class="text-red-500">*</span></label
           >
-          <input
-            type="password"
-            id="password_confirm"
-            name="password_confirm"
-            class="w-full px-4 py-3 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-phema-bg-dark focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
-            placeholder="دوباره رمز رو وارد کن"
-          />
+          <div class="relative">
+            <input
+              type="password"
+              id="password_confirm"
+              name="password_confirm"
+              class="w-full px-4 py-3 pl-12 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-phema-bg-dark focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
+              placeholder="دوباره رمز رو وارد کن"
+            />
+            <button
+              type="button"
+              id="toggle-password-confirm"
+              class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full hover:bg-phema-text/5 dark:hover:bg-phema-gold/10 transition-colors"
+              title="نمایش/مخفی"
+            >
+              <svg
+                id="eye-closed-confirm"
+                class="w-5 h-5 text-phema-text/40 dark:text-phema-text-dark/40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                />
+                <line x1="1" y1="1" x2="23" y2="23" />
+              </svg>
+              <svg
+                id="eye-open-confirm"
+                class="w-5 h-5 text-phema-green dark:text-phema-gold hidden"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+          </div>
         </div>
 
-        <!-- دکمه ثبت‌نام -->
         <button
           type="submit"
           id="submit-btn"
@@ -147,7 +212,6 @@ PhemaPlant{% endblock %} {% block content %}
         </button>
       </form>
 
-      <!-- لینک ورود -->
       <p class="text-center text-sm mt-6 opacity-70">
         حساب داری؟
         <a
@@ -162,6 +226,48 @@ PhemaPlant{% endblock %} {% block content %}
 
 {% endblock %} {% block extra_js %}
 <script>
+  // ==================== Show/Hide Password ====================
+  function setupPasswordToggle(inputId, btnId, closedId, openId) {
+    const input = document.getElementById(inputId);
+    const btn = document.getElementById(btnId);
+    const eyeClosed = document.getElementById(closedId);
+    const eyeOpen = document.getElementById(openId);
+
+    if (!btn || !input) return;
+
+    const show = () => {
+      input.type = "text";
+      eyeClosed.classList.add("hidden");
+      eyeOpen.classList.remove("hidden");
+    };
+    const hide = () => {
+      input.type = "password";
+      eyeClosed.classList.remove("hidden");
+      eyeOpen.classList.add("hidden");
+    };
+
+    btn.addEventListener("mousedown", show);
+    btn.addEventListener("mouseup", hide);
+    btn.addEventListener("mouseleave", hide);
+    btn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      show();
+    });
+    btn.addEventListener("touchend", (e) => {
+      e.preventDefault();
+      hide();
+    });
+  }
+
+  setupPasswordToggle("password", "toggle-password", "eye-closed", "eye-open");
+  setupPasswordToggle(
+    "password_confirm",
+    "toggle-password-confirm",
+    "eye-closed-confirm",
+    "eye-open-confirm",
+  );
+
+  // ==================== Register Form ====================
   document
     .getElementById("register-form")
     .addEventListener("submit", async function (e) {
@@ -172,11 +278,9 @@ PhemaPlant{% endblock %} {% block content %}
       const successMessage = document.getElementById("success-message");
       const form = document.getElementById("register-form");
 
-      // پاک کردن پیام‌های قبلی
       errorMessage.classList.add("hidden");
-      errorMessage.innerHTML = "";
+      errorMessage.textContent = "";
 
-      // ==================== اعتبارسنجی سمت کلاینت ====================
       const errors = [];
 
       const username = document.getElementById("username").value.trim();
@@ -186,24 +290,20 @@ PhemaPlant{% endblock %} {% block content %}
       const password = document.getElementById("password").value;
       const passwordConfirm = document.getElementById("password_confirm").value;
 
-      // چک کردن فیلدهای اجباری
       if (!username) errors.push("نام کاربری رو وارد کن.");
       if (!email) errors.push("ایمیل رو وارد کن.");
       if (!firstName) errors.push("نامت رو وارد کن.");
       if (!password) errors.push("رمز عبور رو وارد کن.");
       if (!passwordConfirm) errors.push("تایید رمز عبور رو وارد کن.");
 
-      // چک کردن فرمت ایمیل
       if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         errors.push("ایمیل معتبر نیست. (مثلاً: you@example.com)");
       }
 
-      // چک کردن طول رمز
       if (password && password.length < 8) {
         errors.push("رمز عبور باید حداقل ۸ کاراکتر باشه.");
       }
 
-      // چک کردن ترکیب رمز (حرف و عدد)
       if (password && password.length >= 8) {
         const hasLetter = /[a-zA-Z]/.test(password);
         const hasNumber = /[0-9]/.test(password);
@@ -212,19 +312,16 @@ PhemaPlant{% endblock %} {% block content %}
         }
       }
 
-      // چک کردن یکسان بودن رمزها
       if (password && passwordConfirm && password !== passwordConfirm) {
         errors.push("رمزهای عبور یکسان نیستن.");
       }
 
-      // اگه خطا داشت، نشون بده
       if (errors.length > 0) {
-        errorMessage.innerHTML = errors.map((err) => "❌ " + err).join("<br>");
+        errorMessage.textContent = errors.map((err) => "❌ " + err).join("\n");
         errorMessage.classList.remove("hidden");
         return;
       }
 
-      // ==================== ارسال به سرور ====================
       submitBtn.disabled = true;
       submitBtn.textContent = "در حال ثبت‌نام...";
 
@@ -256,7 +353,6 @@ PhemaPlant{% endblock %} {% block content %}
             window.location.href = "/login/";
           }, 2000);
         } else {
-          // ==================== ترجمه پیام‌های خطا ====================
           const serverErrors = [];
 
           const translateError = (msg) => {
@@ -321,16 +417,16 @@ PhemaPlant{% endblock %} {% block content %}
             serverErrors.push("خطایی رخ داد. لطفاً دوباره تلاش کن.");
           }
 
-          errorMessage.innerHTML = serverErrors
+          errorMessage.textContent = serverErrors
             .map((err) => "❌ " + err)
-            .join("<br>");
+            .join("\n");
           errorMessage.classList.remove("hidden");
 
           submitBtn.disabled = false;
           submitBtn.textContent = "ثبت‌نام 🌱";
         }
       } catch (error) {
-        errorMessage.innerHTML = "❌ خطای شبکه. لطفاً اتصالت رو چک کن.";
+        errorMessage.textContent = "❌ خطای شبکه. لطفاً اتصالت رو چک کن.";
         errorMessage.classList.remove("hidden");
         submitBtn.disabled = false;
         submitBtn.textContent = "ثبت‌نام 🌱";

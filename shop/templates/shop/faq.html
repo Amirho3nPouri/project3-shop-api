@@ -1,0 +1,164 @@
+{% extends 'shop/base.html' %} {% load static %} {% block title %}سوالات متداول
+| PhemaPlant{% endblock %} {% block content %}
+
+<section class="py-16">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12 reveal">
+      <span
+        class="inline-block px-4 py-1 bg-phema-green/10 dark:bg-phema-gold/10 text-phema-green dark:text-phema-gold rounded-full text-sm mb-6 transition-colors"
+      >
+        ✧ سوالات متداول
+      </span>
+      <h1
+        class="text-4xl md:text-5xl font-bold mb-6 text-phema-text dark:text-phema-text-dark"
+      >
+        سوالات متداول
+      </h1>
+      <p class="text-lg opacity-70">جواب سوالات رایج مشتریان</p>
+    </div>
+
+    <div class="space-y-4">
+      <details
+        class="group bg-white dark:bg-white/5 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-500"
+      >
+        <summary
+          class="flex justify-between items-center font-bold text-lg text-phema-text dark:text-phema-text-dark"
+        >
+          <span>چطور می‌تونم سفارشم رو پیگیری کنم؟</span>
+          <svg
+            class="w-5 h-5 transition-transform group-open:rotate-180"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </summary>
+        <p class="mt-4 opacity-70 leading-relaxed">
+          بعد از ثبت سفارش، می‌تونی از صفحه «سفارش‌های من» وضعیت سفارشت رو
+          ببینی. همچنین کد پیگیری از طریق ایمیل برات ارسال میشه.
+        </p>
+      </details>
+
+      <details
+        class="group bg-white dark:bg-white/5 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-500"
+      >
+        <summary
+          class="flex justify-between items-center font-bold text-lg text-phema-text dark:text-phema-text-dark"
+        >
+          <span>اگه گیاه مریض یا خراب به دستم برسه چیکار کنم؟</span>
+          <svg
+            class="w-5 h-5 transition-transform group-open:rotate-180"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </summary>
+        <p class="mt-4 opacity-70 leading-relaxed">
+          ما ضمانت سالم بودن گیاهان رو داریم. اگه گیاه مریض یا خراب به دستت
+          رسید، تا ۴۸ ساعت عکس بفرست و ما گیاه رو تعویض می‌کنیم.
+        </p>
+      </details>
+
+      <details
+        class="group bg-white dark:bg-white/5 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-500"
+      >
+        <summary
+          class="flex justify-between items-center font-bold text-lg text-phema-text dark:text-phema-text-dark"
+        >
+          <span>هزینه ارسال چقدره؟</span>
+          <svg
+            class="w-5 h-5 transition-transform group-open:rotate-180"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </summary>
+        <p class="mt-4 opacity-70 leading-relaxed">
+          هزینه ارسال بسته به شهر و حجم سفارش متغیره. تو صفحه پرداخت، هزینه دقیق
+          نشون داده میشه.
+        </p>
+      </details>
+
+      <details
+        class="group bg-white dark:bg-white/5 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-500"
+      >
+        <summary
+          class="flex justify-between items-center font-bold text-lg text-phema-text dark:text-phema-text-dark"
+        >
+          <span>چند روزه سفارشم به دستم می‌رسه؟</span>
+          <svg
+            class="w-5 h-5 transition-transform group-open:rotate-180"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </summary>
+        <p class="mt-4 opacity-70 leading-relaxed">
+          تو تهران ۱-۲ روز کاری و تو شهرستان‌ها ۳-۵ روز کاری.
+        </p>
+      </details>
+
+      <details
+        class="group bg-white dark:bg-white/5 rounded-2xl p-6 shadow-sm cursor-pointer transition-colors duration-500"
+      >
+        <summary
+          class="flex justify-between items-center font-bold text-lg text-phema-text dark:text-phema-text-dark"
+        >
+          <span>می‌تونم سفارشم رو لغو کنم؟</span>
+          <svg
+            class="w-5 h-5 transition-transform group-open:rotate-180"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </summary>
+        <p class="mt-4 opacity-70 leading-relaxed">
+          قبل از ارسال، بله. بعد از ارسال، فقط با هماهنگی پشتیبانی.
+        </p>
+      </details>
+    </div>
+
+    <!-- CTA -->
+    <div
+      class="mt-12 text-center bg-white dark:bg-white/5 rounded-3xl p-8 reveal transition-colors duration-500"
+    >
+      <h2
+        class="text-2xl font-bold mb-2 text-phema-text dark:text-phema-text-dark"
+      >
+        جواب سوالت رو پیدا نکردی؟
+      </h2>
+      <p class="opacity-70 mb-6">با ما تماس بگیر، در خدمتیم.</p>
+      <a
+        href="{% url 'web:contact' %}"
+        class="inline-flex items-center gap-2 px-8 py-4 bg-phema-green dark:bg-phema-gold text-white dark:text-phema-text rounded-full font-bold hover:gap-3 transition-all"
+      >
+        تماس با ما
+        <svg
+          class="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

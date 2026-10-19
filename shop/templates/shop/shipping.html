@@ -1,0 +1,147 @@
+{% extends 'shop/base.html' %} {% load static %} {% block title %}شرایط ارسال |
+PhemaPlant{% endblock %} {% block content %}
+
+<section class="py-16">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12 reveal">
+      <span
+        class="inline-block px-4 py-1 bg-phema-green/10 dark:bg-phema-gold/10 text-phema-green dark:text-phema-gold rounded-full text-sm mb-6 transition-colors"
+      >
+        ✧ شرایط ارسال
+      </span>
+      <h1
+        class="text-4xl md:text-5xl font-bold mb-6 text-phema-text dark:text-phema-text-dark"
+      >
+        شرایط ارسال
+      </h1>
+      <p class="text-lg opacity-70">همه چیز درباره‌ی ارسال سفارشات</p>
+    </div>
+
+    <div class="space-y-6">
+      <div
+        class="bg-white dark:bg-white/5 rounded-3xl p-8 shadow-sm reveal transition-colors duration-500"
+      >
+        <div class="flex items-start gap-4">
+          <div
+            class="w-12 h-12 rounded-full bg-phema-green/10 dark:bg-phema-gold/10 flex items-center justify-center flex-shrink-0 text-2xl"
+          >
+            🚚
+          </div>
+          <div>
+            <h2
+              class="text-xl font-bold mb-2 text-phema-text dark:text-phema-text-dark"
+            >
+              زمان ارسال
+            </h2>
+            <ul class="space-y-2 opacity-80 leading-relaxed">
+              <li>• <strong>تهران:</strong> ۱ تا ۲ روز کاری</li>
+              <li>• <strong>شهرستان‌ها:</strong> ۳ تا ۵ روز کاری</li>
+              <li>
+                • <strong>سفارش‌های بالای ۲ میلیون تومان:</strong> ارسال رایگان
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="bg-white dark:bg-white/5 rounded-3xl p-8 shadow-sm reveal reveal-delay-1 transition-colors duration-500"
+      >
+        <div class="flex items-start gap-4">
+          <div
+            class="w-12 h-12 rounded-full bg-phema-green/10 dark:bg-phema-gold/10 flex items-center justify-center flex-shrink-0 text-2xl"
+          >
+            💳
+          </div>
+          <div>
+            <h2
+              class="text-xl font-bold mb-2 text-phema-text dark:text-phema-text-dark"
+            >
+              هزینه ارسال
+            </h2>
+            <ul class="space-y-2 opacity-80 leading-relaxed">
+              <li>• <strong>تهران:</strong> ۵۰,۰۰۰ تومان</li>
+              <li>• <strong>شهرستان‌ها:</strong> ۸۰,۰۰۰ تومان</li>
+              <li>• <strong>سفارش‌های بالای ۲ میلیون تومان:</strong> رایگان</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="bg-white dark:bg-white/5 rounded-3xl p-8 shadow-sm reveal reveal-delay-2 transition-colors duration-500"
+      >
+        <div class="flex items-start gap-4">
+          <div
+            class="w-12 h-12 rounded-full bg-phema-green/10 dark:bg-phema-gold/10 flex items-center justify-center flex-shrink-0 text-2xl"
+          >
+            📦
+          </div>
+          <div>
+            <h2
+              class="text-xl font-bold mb-2 text-phema-text dark:text-phema-text-dark"
+            >
+              بسته‌بندی
+            </h2>
+            <p class="opacity-80 leading-relaxed">
+              گیاهان با دقت و عشق بسته‌بندی میشن. گلدان‌های شکستنی با فوم و
+              پلاستیک حبابی محافظت میشن. همه‌ی بسته‌ها قابل ردیابی هستن.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="bg-white dark:bg-white/5 rounded-3xl p-8 shadow-sm reveal reveal-delay-3 transition-colors duration-500"
+      >
+        <div class="flex items-start gap-4">
+          <div
+            class="w-12 h-12 rounded-full bg-phema-green/10 dark:bg-phema-gold/10 flex items-center justify-center flex-shrink-0 text-2xl"
+          >
+            🔄
+          </div>
+          <div>
+            <h2
+              class="text-xl font-bold mb-2 text-phema-text dark:text-phema-text-dark"
+            >
+              مرجوعی و تعویض
+            </h2>
+            <p class="opacity-80 leading-relaxed">
+              اگه گیاه مریض یا خراب به دستت رسید، تا ۴۸ ساعت عکس بفرست و ما گیاه
+              رو تعویض می‌کنیم. هزینه‌ی ارسال مرجوعی با ماست.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div
+      class="mt-12 text-center bg-phema-green dark:bg-phema-gold rounded-3xl p-12 reveal transition-colors duration-500"
+    >
+      <h2 class="text-3xl font-bold text-white dark:text-phema-text mb-4">
+        سوال دیگه‌ای داری؟
+      </h2>
+      <p class="text-white/80 dark:text-phema-text/80 mb-8">
+        با پشتیبانی تماس بگیر.
+      </p>
+      <a
+        href="{% url 'web:contact' %}"
+        class="inline-flex items-center gap-2 px-8 py-4 bg-white dark:bg-phema-text text-phema-green dark:text-phema-gold rounded-full font-bold hover:gap-3 transition-all"
+      >
+        تماس با ما
+        <svg
+          class="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

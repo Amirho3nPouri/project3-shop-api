@@ -1,12 +1,12 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from django.db.models import Sum
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import Category, Product, Cart, CartItem, Order, OrderItem
 
-from django.contrib.auth.password_validation import validate_password
-from django.core.exceptions import ValidationError
 
 # ==================== User & Auth ====================
 
@@ -53,16 +53,14 @@ class RegisterSerializer(serializers.ModelSerializer):
         return value
 
     def validate_email(self, value):
-        if User.objects.filter(email=value).exists():
+        if value and User.objects.filter(email=value).exists():
             raise serializers.ValidationError('این ایمیل قبلاً ثبت شده.')
         return value
 
     def validate_password(self, value):
-        """اعتبارسنجی رمز عبور با قوانین جنگو"""
         try:
             validate_password(value)
         except ValidationError as e:
-            # ترجمه‌ی پیام‌های خطا به فارسی
             persian_messages = []
             for msg in e.messages:
                 msg_lower = msg.lower()
@@ -142,10 +140,9 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'category', 'category_name', 'name', 'slug',
             'description', 'price', 'stock', 'image',
-            'is_available', 'created_at', 'updated_at'
+            'is_available', 'is_featured', 'created_at', 'updated_at'
         ]
         read_only_fields = ['id', 'created_at', 'updated_at']
-
 
 # ==================== Cart ====================
 

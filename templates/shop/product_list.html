@@ -46,20 +46,17 @@ PhemaPlant{% endblock %} {% block content %}
       </div>
     </div>
 
-    <!-- Products Grid (Skeleton هم اینجا لود میشه) -->
     <div
       id="products-grid"
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6"
     ></div>
 
-    <!-- Empty State -->
     <div id="empty-state" class="hidden text-center py-20">
       <div class="text-6xl mb-4">🌱</div>
       <h3 class="text-xl font-bold mb-2">محصولی پیدا نشد</h3>
       <p class="opacity-70">فیلترها رو تغییر بده یا دوباره جستجو کن.</p>
     </div>
 
-    <!-- Pagination -->
     <div id="pagination" class="hidden flex justify-center gap-2 mt-12"></div>
   </div>
 </section>
@@ -132,7 +129,6 @@ PhemaPlant{% endblock %} {% block content %}
 
     // ==================== Load Products ====================
     async function loadProducts() {
-      // نمایش Skeleton
       showSkeleton();
 
       const params = new URLSearchParams();
@@ -144,7 +140,6 @@ PhemaPlant{% endblock %} {% block content %}
       if (currentFilters.page) params.append("page", currentFilters.page);
 
       try {
-        // تاخیر مصنوعی برای دیدن Skeleton (تو پروداکشن حذف کن)
         await new Promise((resolve) => setTimeout(resolve, 500));
 
         const response = await fetch(
@@ -183,20 +178,20 @@ PhemaPlant{% endblock %} {% block content %}
       const price = parseInt(product.price).toLocaleString("fa-IR");
 
       div.innerHTML = `
-            <a href="/products/${product.slug}/" class="block">
+            <a href="/products/${escapeHTML(product.slug)}/" class="block">
                 <div class="aspect-square bg-phema-green/10 dark:bg-phema-gold/5 flex items-center justify-center text-6xl overflow-hidden">
                     ${
                       product.image
-                        ? `<img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">`
+                        ? `<img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">`
                         : "🌱"
                     }
                 </div>
             </a>
             <div class="p-5">
-                <a href="/products/${product.slug}/">
-                    <h3 class="font-bold mb-2 group-hover:text-phema-green dark:group-hover:text-phema-gold transition-colors">${product.name}</h3>
+                <a href="/products/${escapeHTML(product.slug)}/">
+                    <h3 class="font-bold mb-2 group-hover:text-phema-green dark:group-hover:text-phema-gold transition-colors">${escapeHTML(product.name)}</h3>
                 </a>
-                <p class="text-sm opacity-60 mb-3">${product.description ? product.description.substring(0, 50) + "..." : "بدون توضیحات"}</p>
+                <p class="text-sm opacity-60 mb-3">${escapeHTML(product.description ? product.description.substring(0, 50) + "..." : "بدون توضیحات")}</p>
                 <div class="flex justify-between items-center">
                     <span class="text-lg font-bold text-phema-green dark:text-phema-gold transition-colors">${price} تومان</span>
                     <button class="add-to-cart-btn small w-10 h-10 rounded-full bg-phema-green dark:bg-phema-gold text-white dark:text-phema-text flex items-center justify-center transition-colors" title="افزودن به سبد" data-product-id="${product.id}">

@@ -1,0 +1,124 @@
+{% extends 'shop/base.html' %} {% load static %} {% block title %}درباره ما |
+PhemaPlant{% endblock %} {% block content %}
+
+<section class="py-16">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center mb-12 reveal">
+      <span
+        class="inline-block px-4 py-1 bg-phema-green/10 dark:bg-phema-gold/10 text-phema-green dark:text-phema-gold rounded-full text-sm mb-6 transition-colors"
+      >
+        ✧ درباره ما
+      </span>
+      <h1
+        class="text-4xl md:text-5xl font-bold mb-6 text-phema-text dark:text-phema-text-dark"
+      >
+        ما کی هستیم؟
+      </h1>
+      <p class="text-lg opacity-70 leading-relaxed">
+        PhemaPlant یه فروشگاه گیاهان آپارتمانی و لوازم جانبی‌ست که با عشق به
+        طبیعت ساخته شده.
+      </p>
+    </div>
+
+    <!-- Logo -->
+    <div class="flex justify-center mb-16 reveal">
+      <img
+        src="{% static 'shop/img/logo.png' %}"
+        alt="PhemaPlant"
+        class="w-48 h-auto drop-shadow-lg"
+      />
+    </div>
+
+    <!-- Story -->
+    <div
+      class="bg-white dark:bg-white/5 rounded-3xl p-8 md:p-12 shadow-sm mb-8 reveal transition-colors duration-500"
+    >
+      <h2
+        class="text-2xl font-bold mb-6 text-phema-text dark:text-phema-text-dark"
+      >
+        داستان ما
+      </h2>
+      <div class="space-y-4 text-lg leading-relaxed opacity-80">
+        <p>
+          PhemaPlant از یه عشق ساده به گیاه شروع شد. ما باور داریم که گیاهان
+          آپارتمانی فقط یه دکور نیستن، بلکه یه بخشی از زندگی روزمره‌مون‌ان.
+        </p>
+        <p>
+          با شعار «گل برای گل‌های فیما»، ما تلاش می‌کنیم تا گیاهان آپارتمانی با
+          کیفیت، گلدان‌های زیبا، و لوازم جانبی حرفه‌ای رو به دست شما برسونیم.
+        </p>
+        <p>
+          هدف ما این‌ست که هر خانه‌ای، هر دفتری، و هر فضایی رو سبزتر، آرام‌تر و
+          زیباتر کنیم.
+        </p>
+      </div>
+    </div>
+
+    <!-- Values -->
+    <div class="grid md:grid-cols-3 gap-6 mb-8">
+      <div
+        class="bg-white dark:bg-white/5 rounded-3xl p-8 shadow-sm reveal reveal-delay-1 transition-colors duration-500"
+      >
+        <div class="text-5xl mb-4">🌿</div>
+        <h3
+          class="font-bold text-xl mb-2 text-phema-text dark:text-phema-text-dark"
+        >
+          کیفیت
+        </h3>
+        <p class="opacity-70">گیاهان انتخاب‌شده با دقت و سلامت تضمین‌شده</p>
+      </div>
+      <div
+        class="bg-white dark:bg-white/5 rounded-3xl p-8 shadow-sm reveal reveal-delay-2 transition-colors duration-500"
+      >
+        <div class="text-5xl mb-4">💚</div>
+        <h3
+          class="font-bold text-xl mb-2 text-phema-text dark:text-phema-text-dark"
+        >
+          عشق
+        </h3>
+        <p class="opacity-70">هر گیاه با عشق و دقت بسته‌بندی میشه</p>
+      </div>
+      <div
+        class="bg-white dark:bg-white/5 rounded-3xl p-8 shadow-sm reveal reveal-delay-3 transition-colors duration-500"
+      >
+        <div class="text-5xl mb-4">🌱</div>
+        <h3
+          class="font-bold text-xl mb-2 text-phema-text dark:text-phema-text-dark"
+        >
+          پایداری
+        </h3>
+        <p class="opacity-70">بسته‌بندی‌های دوستدار محیط زیست</p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div
+      class="text-center bg-phema-green dark:bg-phema-gold rounded-3xl p-12 reveal transition-colors duration-500"
+    >
+      <h2 class="text-3xl font-bold text-white dark:text-phema-text mb-4">
+        آماده‌ای شروع کنی؟
+      </h2>
+      <p class="text-white/80 dark:text-phema-text/80 mb-8">
+        یه سری به محصولاتمون بزن و گیاه مورد علاقه‌ت رو پیدا کن.
+      </p>
+      <a
+        href="{% url 'web:product_list' %}"
+        class="inline-flex items-center gap-2 px-8 py-4 bg-white dark:bg-phema-text text-phema-green dark:text-phema-gold rounded-full font-bold hover:gap-3 transition-all"
+      >
+        مشاهده محصولات
+        <svg
+          class="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

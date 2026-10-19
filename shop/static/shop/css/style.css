@@ -84,7 +84,7 @@ input:focus-visible {
   outline-offset: 2px;
 }
 
-/* ==================== 404 Page ==================== */
+/* ==================== 404 Page - Question Mark Animation ==================== */
 
 .question-mark {
   animation: questionFloat 2s ease-in-out infinite alternate;
@@ -102,7 +102,7 @@ input:focus-visible {
   }
 }
 
-/* ==================== 500 Page ==================== */
+/* ==================== 500 Page - Exclamation Mark Animation ==================== */
 
 .exclamation-mark {
   animation: exclamationShake 1.5s ease-in-out infinite;
@@ -329,7 +329,6 @@ input:focus-visible {
   aspect-ratio: 1 / 1;
   width: 100%;
 }
-
 .skeleton-text {
   height: 16px;
   margin-bottom: 8px;
@@ -436,15 +435,132 @@ input:focus-visible {
 html.lenis {
   height: auto;
 }
-
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
 }
-
 .lenis.lenis-smooth [data-lenis-prevent] {
   overscroll-behavior: contain;
 }
-
 .lenis.lenis-stopped {
   overflow: hidden;
+}
+
+/* ==================== Horizontal Scroll Animations ==================== */
+
+#products-scroll::-webkit-scrollbar {
+  display: none;
+}
+#products-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#products-scroll > * {
+  flex-shrink: 0;
+  width: 280px;
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease;
+  position: relative;
+  scroll-snap-align: start;
+}
+
+@media (max-width: 640px) {
+  #products-scroll > * {
+    width: 220px;
+  }
+}
+
+#products-scroll > *:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px -10px rgba(74, 93, 58, 0.3);
+}
+
+.dark #products-scroll > *:hover {
+  box-shadow: 0 20px 40px -10px rgba(255, 200, 120, 0.2);
+}
+
+#products-scroll > *:hover::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, #ffc878, #4a5d3a, #ffc878);
+  border-radius: 18px;
+  z-index: -1;
+  opacity: 0.3;
+  filter: blur(15px);
+  transition: opacity 0.3s ease;
+}
+
+#products-scroll > * img {
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#products-scroll > *:hover img {
+  transform: scale(1.1) rotate(2deg);
+}
+
+#products-scroll {
+  cursor: grab;
+}
+#products-scroll:active {
+  cursor: grabbing;
+}
+
+#scroll-left-btn,
+#scroll-right-btn {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#scroll-left-btn:hover,
+#scroll-right-btn:hover {
+  transform: translateY(-50%) scale(1.15);
+}
+
+#scroll-progress-bar {
+  transition: width 0.1s linear;
+}
+
+@keyframes btnPulse {
+  0%,
+  100% {
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.05);
+  }
+}
+
+.scroll-btn-pulse {
+  animation: btnPulse 2s ease-in-out infinite;
+}
+
+@keyframes cardEnter {
+  0% {
+    opacity: 0;
+    transform: translateX(30px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+#products-scroll > *:nth-child(1) {
+  animation: cardEnter 0.5s ease 0.1s both;
+}
+#products-scroll > *:nth-child(2) {
+  animation: cardEnter 0.5s ease 0.2s both;
+}
+#products-scroll > *:nth-child(3) {
+  animation: cardEnter 0.5s ease 0.3s both;
+}
+#products-scroll > *:nth-child(4) {
+  animation: cardEnter 0.5s ease 0.4s both;
+}
+#products-scroll > *:nth-child(5) {
+  animation: cardEnter 0.5s ease 0.5s both;
+}
+#products-scroll > *:nth-child(6) {
+  animation: cardEnter 0.5s ease 0.6s both;
 }

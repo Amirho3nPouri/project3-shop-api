@@ -51,7 +51,15 @@ PhemaPlant{% endblock %} {% block content %}
             <h2 id="profile-fullname" class="text-2xl font-bold mb-1 truncate">
               ...
             </h2>
-            <p id="profile-username" class="opacity-60" dir="ltr" style="text-align: right;">@...</p>          </div>
+            <p
+              id="profile-username"
+              class="opacity-60"
+              dir="ltr"
+              style="text-align: right"
+            >
+              @...
+            </p>
+          </div>
         </div>
 
         <!-- Stats -->
@@ -589,12 +597,7 @@ PhemaPlant{% endblock %} {% block content %}
     // ==================== Logout ====================
     document.getElementById("logout-btn").addEventListener("click", () => {
       if (!confirm("مطمئنی می‌خوای خارج بشی؟")) return;
-
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("refresh_token");
-      localStorage.removeItem("user");
-
-      window.location.href = "/";
+      window.logoutUser();
     });
 
     // ==================== Toast ====================

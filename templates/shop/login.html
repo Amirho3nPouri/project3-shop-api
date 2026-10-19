@@ -6,7 +6,6 @@ PhemaPlant{% endblock %} {% block content %}
     <div
       class="bg-white dark:bg-white/5 rounded-3xl shadow-xl p-8 md:p-10 transition-colors duration-500"
     >
-      <!-- لوگو -->
       <div class="text-center mb-8">
         <img
           src="{% static 'shop/img/logo.png' %}"
@@ -21,15 +20,12 @@ PhemaPlant{% endblock %} {% block content %}
         <p class="text-sm opacity-70 mt-2">وارد حساب کاربریت شو</p>
       </div>
 
-      <!-- فرم -->
       <form id="login-form" class="space-y-5">
-        <!-- پیام خطا -->
         <div
           id="error-message"
           class="hidden bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm p-3 rounded-lg border border-red-200 dark:border-red-800"
         ></div>
 
-        <!-- یوزرنیم -->
         <div>
           <label
             for="username"
@@ -47,24 +43,59 @@ PhemaPlant{% endblock %} {% block content %}
           />
         </div>
 
-        <!-- پسورد -->
         <div>
           <label
             for="password"
             class="block text-sm font-medium mb-2 text-phema-text dark:text-phema-text-dark"
             >رمز عبور</label
           >
-          <input
-            type="password"
-            id="password"
-            name="password"
-            required
-            class="w-full px-4 py-3 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-phema-bg-dark focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
-            placeholder="رمزت"
-          />
+          <div class="relative">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              class="w-full px-4 py-3 pl-12 rounded-xl border border-phema-text/10 dark:border-phema-gold/20 bg-phema-bg dark:bg-phema-bg-dark focus:border-phema-green dark:focus:border-phema-gold focus:outline-none transition-colors"
+              placeholder="رمزت"
+            />
+            <button
+              type="button"
+              id="toggle-password"
+              class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full hover:bg-phema-text/5 dark:hover:bg-phema-gold/10 transition-colors"
+              title="نمایش/مخفی"
+            >
+              <svg
+                id="eye-closed"
+                class="w-5 h-5 text-phema-text/40 dark:text-phema-text-dark/40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                />
+                <line x1="1" y1="1" x2="23" y2="23" />
+              </svg>
+              <svg
+                id="eye-open"
+                class="w-5 h-5 text-phema-green dark:text-phema-gold hidden"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+          </div>
         </div>
 
-        <!-- فراموشی رمز -->
         <div class="text-left">
           <a
             href="/api/password-reset/"
@@ -73,7 +104,6 @@ PhemaPlant{% endblock %} {% block content %}
           >
         </div>
 
-        <!-- دکمه ورود -->
         <button
           type="submit"
           id="submit-btn"
@@ -83,7 +113,6 @@ PhemaPlant{% endblock %} {% block content %}
         </button>
       </form>
 
-      <!-- لینک ثبت‌نام -->
       <p class="text-center text-sm mt-6 opacity-70">
         حساب نداری؟
         <a
@@ -98,6 +127,47 @@ PhemaPlant{% endblock %} {% block content %}
 
 {% endblock %} {% block extra_js %}
 <script>
+  // ==================== Show/Hide Password ====================
+  const passwordInput = document.getElementById("password");
+  const toggleBtn = document.getElementById("toggle-password");
+  const eyeClosed = document.getElementById("eye-closed");
+  const eyeOpen = document.getElementById("eye-open");
+
+  if (toggleBtn && passwordInput) {
+    toggleBtn.addEventListener("mousedown", () => {
+      passwordInput.type = "text";
+      eyeClosed.classList.add("hidden");
+      eyeOpen.classList.remove("hidden");
+    });
+
+    toggleBtn.addEventListener("mouseup", () => {
+      passwordInput.type = "password";
+      eyeClosed.classList.remove("hidden");
+      eyeOpen.classList.add("hidden");
+    });
+
+    toggleBtn.addEventListener("mouseleave", () => {
+      passwordInput.type = "password";
+      eyeClosed.classList.remove("hidden");
+      eyeOpen.classList.add("hidden");
+    });
+
+    toggleBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      passwordInput.type = "text";
+      eyeClosed.classList.add("hidden");
+      eyeOpen.classList.remove("hidden");
+    });
+
+    toggleBtn.addEventListener("touchend", (e) => {
+      e.preventDefault();
+      passwordInput.type = "password";
+      eyeClosed.classList.remove("hidden");
+      eyeOpen.classList.add("hidden");
+    });
+  }
+
+  // ==================== Login Form ====================
   document
     .getElementById("login-form")
     .addEventListener("submit", async function (e) {
@@ -129,7 +199,6 @@ PhemaPlant{% endblock %} {% block content %}
         const data = await response.json();
 
         if (response.ok) {
-          // ذخیره توکن‌ها
           localStorage.setItem("access_token", data.access);
           localStorage.setItem("refresh_token", data.refresh);
 
@@ -137,7 +206,6 @@ PhemaPlant{% endblock %} {% block content %}
           submitBtn.classList.remove("bg-phema-green", "dark:bg-phema-gold");
           submitBtn.classList.add("bg-green-600");
 
-          // ریدایرکت به صفحه اصلی
           setTimeout(() => {
             window.location.href = "/";
           }, 800);
@@ -146,6 +214,10 @@ PhemaPlant{% endblock %} {% block content %}
 
           if (data.detail) {
             errorText = data.detail;
+          }
+
+          if (response.status === 429) {
+            errorText = data.detail || "تعداد تلاش‌های ناموفق زیاد بوده.";
           }
 
           errorMessage.textContent = errorText;

@@ -24,7 +24,6 @@
 
   window.lenis = lenis;
 
-  // برای لینک‌های anchor
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
       const href = this.getAttribute("href");
@@ -258,6 +257,41 @@ window.addToCartAnimated = async function (
   }
 };
 
+// ==================== Logout ====================
+window.logoutUser = async function () {
+  const token = localStorage.getItem("access_token");
+  const refreshToken = localStorage.getItem("refresh_token");
+
+  if (!token) {
+    window.location.href = "/login/";
+    return;
+  }
+
+  try {
+    await fetch("/api/logout/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        refresh: refreshToken,
+      }),
+    });
+  } catch (error) {
+    // حتی اگه خطا داد، توکن‌ها رو پاک کن
+    console.error("Logout error:", error);
+  }
+
+  // توکن‌ها رو پاک کن
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("refresh_token");
+  localStorage.removeItem("user");
+
+  // برو به صفحه ورود
+  window.location.href = "/login/";
+};
+
 // ==================== Back to Top ====================
 (function () {
   const btn = document.getElementById("back-to-top");
@@ -353,7 +387,6 @@ window.createOrderSkeleton = function () {
 
 // ==================== Reveal on Scroll ====================
 (function () {
-  // به‌طور خودکار به بخش‌های اصلی کلاس reveal اضافه کن
   const sections = document.querySelectorAll("section");
 
   sections.forEach((section, index) => {
@@ -425,3 +458,14 @@ window.createOrderSkeleton = function () {
     { passive: true },
   );
 })();
+
+// ==================== XSS Protection ====================
+window.escapeHTML = function (str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};

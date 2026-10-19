@@ -142,6 +142,7 @@ PhemaPlant{% endblock %} {% block content %}
     }
 
     // ==================== Create Order Card ====================
+
     function createOrderCard(order) {
       const div = document.createElement("div");
       div.className =
@@ -160,44 +161,41 @@ PhemaPlant{% endblock %} {% block content %}
           const itemPrice = parseInt(item.price).toLocaleString("fa-IR");
           const subtotal = parseInt(item.subtotal).toLocaleString("fa-IR");
           return `
-                <div class="flex items-center gap-4 py-3 border-b border-phema-text/5 dark:border-phema-gold/10 last:border-b-0">
-                    <div class="w-12 h-12 rounded-lg bg-phema-green/10 dark:bg-phema-gold/5 flex items-center justify-center text-2xl flex-shrink-0">
-                        🌱
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="font-bold truncate">${item.product_name}</p>
-                        <p class="text-xs opacity-60">${itemPrice} تومان × ${item.quantity}</p>
-                    </div>
-                    <span class="font-bold text-sm text-phema-green dark:text-phema-gold">${subtotal} تومان</span>
+            <div class="flex items-center gap-4 py-3 border-b border-phema-text/5 dark:border-phema-gold/10 last:border-b-0">
+                <div class="w-12 h-12 rounded-lg bg-phema-green/10 dark:bg-phema-gold/5 flex items-center justify-center text-2xl flex-shrink-0">
+                    🌱
                 </div>
-            `;
+                <div class="flex-1 min-w-0">
+                    <p class="font-bold truncate">${escapeHTML(item.product_name)}</p>
+                    <p class="text-xs opacity-60">${itemPrice} تومان × ${item.quantity}</p>
+                </div>
+                <span class="font-bold text-sm text-phema-green dark:text-phema-gold">${subtotal} تومان</span>
+            </div>
+        `;
         })
         .join("");
 
       div.innerHTML = `
-            <!-- Header -->
-            <div class="p-6 border-b border-phema-text/10 dark:border-phema-gold/20">
-                <div class="flex flex-wrap justify-between items-center gap-4">
-                    <div>
-                        <div class="flex items-center gap-3 mb-2">
-                            <h3 class="font-bold text-lg">سفارش #${order.id}</h3>
-                            <span class="px-3 py-1 rounded-full text-xs font-bold ${status.color}">${status.text}</span>
-                        </div>
-                        <p class="text-sm opacity-60">${orderDate}</p>
+        <div class="p-6 border-b border-phema-text/10 dark:border-phema-gold/20">
+            <div class="flex flex-wrap justify-between items-center gap-4">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <h3 class="font-bold text-lg">سفارش #${order.id}</h3>
+                        <span class="px-3 py-1 rounded-full text-xs font-bold ${status.color}">${status.text}</span>
                     </div>
-                    <div class="text-left">
-                        <p class="text-xs opacity-60 mb-1">مبلغ کل</p>
-                        <p class="text-xl font-bold text-phema-green dark:text-phema-gold">${totalPrice} تومان</p>
-                    </div>
+                    <p class="text-sm opacity-60">${orderDate}</p>
+                </div>
+                <div class="text-left">
+                    <p class="text-xs opacity-60 mb-1">مبلغ کل</p>
+                    <p class="text-xl font-bold text-phema-green dark:text-phema-gold">${totalPrice} تومان</p>
                 </div>
             </div>
-            
-            <!-- Items -->
-            <div class="p-6">
-                <h4 class="text-sm font-bold mb-3 opacity-70">آیتم‌های سفارش:</h4>
-                ${itemsHtml}
-            </div>
-        `;
+        </div>
+        <div class="p-6">
+            <h4 class="text-sm font-bold mb-3 opacity-70">آیتم‌های سفارش:</h4>
+            ${itemsHtml}
+        </div>
+    `;
 
       return div;
     }

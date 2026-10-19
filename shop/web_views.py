@@ -49,3 +49,21 @@ class NotFoundView(TemplateView):
 
 class ServerErrorView(TemplateView):
     template_name = 'shop/500.html'
+
+class AboutView(TemplateView):
+    template_name = 'shop/about.html'
+
+
+class ContactView(TemplateView):
+    template_name = 'shop/contact.html'
+
+class FAQView(TemplateView):
+    template_name = 'shop/faq.html'
+
+
+class ShippingView(TemplateView):
+    template_name = 'shop/shipping.html'
+
+
+class PrivacyView(TemplateView):
+    template_name = 'shop/privacy.html'

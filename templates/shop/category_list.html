@@ -24,7 +24,7 @@ PhemaPlant{% endblock %} {% block content %}
     <!-- Categories Grid -->
     <div
       id="categories-grid"
-      class="hidden grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+      class="hidden grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6"
     ></div>
 
     <!-- Empty State -->
@@ -107,7 +107,6 @@ PhemaPlant{% endblock %} {% block content %}
       div.className =
         "group bg-white dark:bg-white/5 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1";
 
-      // تعداد محصولات این دسته
       let productCount = 0;
       try {
         const res = await fetch(
@@ -122,14 +121,14 @@ PhemaPlant{% endblock %} {% block content %}
       const emoji = getEmoji(category.name);
 
       div.innerHTML = `
-            <div class="aspect-square bg-gradient-to-br from-phema-green/10 to-phema-gold/10 dark:from-phema-gold/5 dark:to-phema-green/5 flex items-center justify-center text-7xl md:text-8xl transition-transform duration-500 group-hover:scale-110">
-                ${emoji}
-            </div>
-            <div class="p-5 text-center">
-                <h3 class="font-bold text-lg mb-1 group-hover:text-phema-green dark:group-hover:text-phema-gold transition-colors">${category.name}</h3>
-                <p class="text-sm opacity-60">${productCount.toLocaleString("fa-IR")} محصول</p>
-            </div>
-        `;
+        <div class="aspect-square bg-gradient-to-br from-phema-green/10 to-phema-gold/10 dark:from-phema-gold/5 dark:to-phema-green/5 flex items-center justify-center text-7xl md:text-8xl transition-transform duration-500 group-hover:scale-110">
+            ${emoji}
+        </div>
+        <div class="p-5 text-center">
+            <h3 class="font-bold text-lg mb-1 group-hover:text-phema-green dark:group-hover:text-phema-gold transition-colors">${escapeHTML(category.name)}</h3>
+            <p class="text-sm opacity-60">${productCount.toLocaleString("fa-IR")} محصول</p>
+        </div>
+    `;
 
       return div;
     }

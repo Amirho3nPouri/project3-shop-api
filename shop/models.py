@@ -18,20 +18,24 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(
-        Category,
-        on_delete=models.CASCADE,
-        related_name='products',
-        verbose_name="دسته‌بندی"
+        Category, on_delete=models.CASCADE,
+        related_name='products', verbose_name="دسته‌بندی"
     )
     name = models.CharField(max_length=200, verbose_name="نام محصول")
     slug = models.SlugField(max_length=200, unique=True, verbose_name="اسلاگ")
     description = models.TextField(blank=True, verbose_name="توضیحات")
     price = models.DecimalField(max_digits=10, decimal_places=0, verbose_name="قیمت (تومان)")
     stock = models.PositiveIntegerField(default=0, verbose_name="موجودی")
-    image = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name="تصویر")
+    image = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name="تصویر اصلی")
     is_available = models.BooleanField(default=True, verbose_name="موجود")
+    is_featured = models.BooleanField(default=False, verbose_name="محصول ویژه")  
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="تاریخ ساخت")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="تاریخ ویرایش")
+
+    class Meta:
+        verbose_name = "محصول"
+        verbose_name_plural = "محصولات"
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.name
@@ -119,3 +123,19 @@ class OrderItem(models.Model):
     class Meta:
         verbose_name = "آیتم سفارش"
         verbose_name_plural = "آیتم‌های سفارش"
+
+
+class LoginAttempt(models.Model):
+    ip_address = models.GenericIPAddressField(verbose_name="IP")
+    username = models.CharField(max_length=150, verbose_name="نام کاربری")
+    attempted_at = models.DateTimeField(auto_now_add=True, verbose_name="تاریخ تلاش")
+    was_successful = models.BooleanField(default=False, verbose_name="موفق")
+    
+    class Meta:
+        verbose_name = "تلاش ورود"
+        verbose_name_plural = "تلاش‌های ورود"
+        ordering = ['-attempted_at']
+    
+    def __str__(self):
+        status = "✅" if self.was_successful else "❌"
+        return f"{status} {self.username} ({self.ip_address}) - {self.attempted_at}"

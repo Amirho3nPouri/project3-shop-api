@@ -13,6 +13,11 @@ urlpatterns = [
     path('login/', web_views.LoginView.as_view(), name='login'),
     path('register/', web_views.RegisterView.as_view(), name='register'),
     path('profile/', web_views.ProfileView.as_view(), name='profile'),
-    path('404/', web_views.NotFoundView.as_view(), name='not_found'), 
+    path('404/', web_views.NotFoundView.as_view(), name='not_found'),
     path('500/', web_views.ServerErrorView.as_view(), name='server_error'),
+    path('about/', web_views.AboutView.as_view(), name='about'),
+    path('contact/', web_views.ContactView.as_view(), name='contact'),
+    path('faq/', web_views.FAQView.as_view(), name='faq'),               # ← جدید
+    path('shipping/', web_views.ShippingView.as_view(), name='shipping'),  # ← جدید
+    path('privacy/', web_views.PrivacyView.as_view(), name='privacy'),   # ← جدید
 ]

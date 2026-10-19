@@ -5,13 +5,7 @@
 <section class="relative overflow-hidden">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
     <div class="grid md:grid-cols-2 gap-12 items-center">
-      <!-- Text -->
       <div class="text-center md:text-right animate-fade-in">
-        <span
-          class="inline-block px-4 py-1 bg-phema-green/10 dark:bg-phema-gold/10 text-phema-green dark:text-phema-gold rounded-full text-sm mb-6 transition-colors"
-        >
-          ✧ تازه‌ترین‌ها
-        </span>
         <h1
           class="text-4xl md:text-6xl font-bold leading-tight mb-6 text-phema-text dark:text-phema-text-dark transition-colors"
         >
@@ -42,7 +36,7 @@
             </svg>
           </a>
           <a
-            href="#"
+            href="{% url 'web:about' %}"
             class="inline-flex items-center gap-2 px-8 py-4 border-2 border-phema-text/20 dark:border-phema-text-dark/20 rounded-full font-medium hover:border-phema-green dark:hover:border-phema-gold hover:text-phema-green dark:hover:text-phema-gold transition-colors"
           >
             بیشتر بدون
@@ -50,7 +44,6 @@
         </div>
       </div>
 
-      <!-- Image -->
       <div class="relative animate-slide-up">
         <div
           class="absolute inset-0 bg-phema-green/20 dark:bg-phema-gold/10 rounded-full blur-3xl transition-colors duration-1000"
@@ -58,7 +51,8 @@
         <img
           src="{% static 'shop/img/logo.png' %}"
           alt="PhemaPlant"
-          class="relative w-full max-w-md mx-auto drop-shadow-2xl"
+          class="parallax relative w-full max-w-md mx-auto drop-shadow-2xl"
+          data-speed="0.15"
         />
       </div>
     </div>
@@ -70,32 +64,33 @@
   class="py-20 bg-white/50 dark:bg-black/20 transition-colors duration-500"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12">
+    <div class="text-center mb-12 reveal">
       <h2 class="text-3xl md:text-4xl font-bold mb-4">دسته‌بندی‌ها</h2>
       <p class="opacity-70">چی می‌خوای؟ ✧</p>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-      {% for i in "123456" %}
-      <a
-        href="#"
-        class="group text-center p-6 rounded-2xl bg-phema-bg dark:bg-phema-bg-dark hover:bg-phema-green dark:hover:bg-phema-gold transition-all duration-300 hover:text-white dark:hover:text-phema-text"
-      >
-        <div
-          class="w-16 h-16 mx-auto mb-3 rounded-full bg-phema-green/10 dark:bg-phema-gold/10 group-hover:bg-white/20 flex items-center justify-center text-3xl transition-colors"
-        >
-          🌿
-        </div>
-        <span class="text-sm font-medium">دسته {{ i }}</span>
-      </a>
-      {% endfor %}
+
+    <div id="categories-loading" class="text-center py-10">
+      <div
+        class="inline-block w-10 h-10 border-4 border-phema-green/20 border-t-phema-green rounded-full animate-spin"
+      ></div>
     </div>
+
+    <div
+      id="categories-grid"
+      class="hidden grid grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-4"
+    ></div>
+
+    <div
+      id="categories-empty"
+      class="hidden text-center py-10 opacity-70"
+    ></div>
   </div>
 </section>
 
-<!-- Featured Products -->
+<!-- Featured Products (Horizontal Scroll) -->
 <section class="py-20">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-end mb-12">
+    <div class="flex justify-between items-end mb-12 reveal">
       <div>
         <h2 class="text-3xl md:text-4xl font-bold mb-2">محصولات ویژه</h2>
         <p class="opacity-70">انتخاب‌شده با عشق ✧</p>
@@ -106,42 +101,71 @@
         >مشاهده همه ←</a
       >
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {% for i in "1234" %}
+
+    <div id="products-loading" class="text-center py-10">
       <div
-        class="group bg-white dark:bg-white/5 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
+        class="inline-block w-10 h-10 border-4 border-phema-green/20 border-t-phema-green rounded-full animate-spin"
+      ></div>
+    </div>
+
+    <div id="products-scroll-container" class="hidden relative">
+      <button
+        id="scroll-left-btn"
+        class="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white dark:bg-phema-bg-dark shadow-lg items-center justify-center hover:bg-phema-green hover:text-white transition-all -ml-4 scroll-btn-pulse"
+      >
+        <svg
+          class="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+      </button>
+
+      <button
+        id="scroll-right-btn"
+        class="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white dark:bg-phema-bg-dark shadow-lg items-center justify-center hover:bg-phema-green hover:text-white transition-all -mr-4 scroll-btn-pulse"
+      >
+        <svg
+          class="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M9 18l6-6-6-6" />
+        </svg>
+      </button>
+
+      <div
+        id="products-scroll"
+        class="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4"
+        style="scrollbar-width: none; -ms-overflow-style: none"
+      >
+        <!-- محصولات با JS لود میشن -->
+      </div>
+
+      <div
+        class="absolute left-0 top-0 bottom-4 w-12 bg-gradient-to-r from-phema-bg dark:from-phema-bg-dark to-transparent pointer-events-none hidden md:block"
+      ></div>
+      <div
+        class="absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-phema-bg dark:from-phema-bg-dark to-transparent pointer-events-none hidden md:block"
+      ></div>
+
+      <div
+        class="mt-4 h-1 bg-phema-text/10 dark:bg-phema-gold/20 rounded-full overflow-hidden"
       >
         <div
-          class="aspect-square bg-phema-green/10 dark:bg-phema-gold/5 flex items-center justify-center text-6xl"
-        >
-          🌱
-        </div>
-        <div class="p-5">
-          <h3 class="font-bold mb-2">محصول نمونه {{ i }}</h3>
-          <p class="text-sm opacity-60 mb-3">توضیح کوتاه محصول</p>
-          <div class="flex justify-between items-center">
-            <span
-              class="text-lg font-bold text-phema-green dark:text-phema-gold transition-colors"
-              >۲۵۰,۰۰۰ تومان</span
-            >
-            <button
-              class="w-10 h-10 rounded-full bg-phema-green dark:bg-phema-gold text-white dark:text-phema-text flex items-center justify-center hover:bg-phema-green-light transition-colors"
-            >
-              <svg
-                class="w-5 h-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path d="M12 5v14M5 12h14" />
-              </svg>
-            </button>
-          </div>
-        </div>
+          id="scroll-progress-bar"
+          class="h-full bg-gradient-to-r from-phema-green to-phema-gold rounded-full"
+          style="width: 0%"
+        ></div>
       </div>
-      {% endfor %}
     </div>
+
+    <div id="products-empty" class="hidden text-center py-10 opacity-70"></div>
   </div>
 </section>
 
@@ -150,27 +174,27 @@
   class="py-20 bg-phema-green dark:bg-phema-bg-dark text-white transition-colors duration-500"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12">
+    <div class="text-center mb-12 reveal">
       <h2 class="text-3xl md:text-4xl font-bold mb-4">چرا PhemaPlant؟</h2>
       <p class="opacity-90">ما به گیاه‌ها اهمیت می‌دیم ✧</p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-      <div class="text-center">
+      <div class="reveal reveal-delay-1 text-center">
         <div class="text-5xl mb-4">🚚</div>
         <h3 class="font-bold mb-2">ارسال سریع</h3>
         <p class="text-sm opacity-80">تحویل در کمترین زمان</p>
       </div>
-      <div class="text-center">
+      <div class="reveal reveal-delay-2 text-center">
         <div class="text-5xl mb-4">🌿</div>
         <h3 class="font-bold mb-2">ضمانت سالم بودن</h3>
         <p class="text-sm opacity-80">اگه گیاه مریض بود، عوض می‌کنیم</p>
       </div>
-      <div class="text-center">
+      <div class="reveal reveal-delay-3 text-center">
         <div class="text-5xl mb-4">💬</div>
         <h3 class="font-bold mb-2">مشاوره رایگان</h3>
         <p class="text-sm opacity-80">همیشه کنارتیم</p>
       </div>
-      <div class="text-center">
+      <div class="reveal reveal-delay-4 text-center">
         <div class="text-5xl mb-4">🎁</div>
         <h3 class="font-bold mb-2">بسته‌بندی زیبا</h3>
         <p class="text-sm opacity-80">مناسب هدیه دادن</p>
@@ -179,4 +203,294 @@
   </div>
 </section>
 
+{% endblock %} {% block extra_js %}
+<script>
+  (function () {
+    const API_BASE = "/api";
+
+    // ==================== Load Categories ====================
+    async function loadCategories() {
+      const loading = document.getElementById("categories-loading");
+      const grid = document.getElementById("categories-grid");
+      const empty = document.getElementById("categories-empty");
+
+      try {
+        const response = await fetch(`${API_BASE}/categories/`);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const categories = data.results || data;
+
+        loading.classList.add("hidden");
+
+        if (categories.length === 0) {
+          empty.classList.remove("hidden");
+          empty.innerHTML = `
+                    <div class="text-6xl mb-4">🌱</div>
+                    <h3 class="text-xl font-bold mb-2">هنوز دسته‌بندی‌ای اضافه نشده</h3>
+                `;
+          return;
+        }
+
+        const topCategories = categories.slice(0, 6);
+
+        topCategories.forEach((cat, index) => {
+          const card = document.createElement("a");
+          card.href = `/products/?category=${cat.id}`;
+          card.className = `reveal reveal-delay-${index + 1} group text-center p-6 rounded-2xl bg-phema-bg dark:bg-phema-bg-dark hover:bg-phema-green dark:hover:bg-phema-gold transition-all duration-300 hover:text-white dark:hover:text-phema-text hover:-translate-y-1`;
+
+          const emoji = getCategoryEmoji(cat.name);
+
+          card.innerHTML = `
+                    <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-phema-green/10 dark:bg-phema-gold/10 group-hover:bg-white/20 flex items-center justify-center text-3xl transition-colors">
+                        ${emoji}
+                    </div>
+                    <span class="text-sm font-medium">${escapeHTML(cat.name)}</span>
+                `;
+
+          grid.appendChild(card);
+        });
+
+        grid.classList.remove("hidden");
+        initReveal();
+      } catch (error) {
+        console.error("Error loading categories:", error);
+        loading.classList.add("hidden");
+        empty.classList.remove("hidden");
+        empty.innerHTML = `
+                <div class="text-6xl mb-4">⚠️</div>
+                <h3 class="text-xl font-bold mb-2">خطا در لود دسته‌بندی‌ها</h3>
+                <p class="opacity-70 text-sm">${error.message}</p>
+            `;
+      }
+    }
+
+    // ==================== Load Featured Products ====================
+    async function loadFeaturedProducts() {
+      const loading = document.getElementById("products-loading");
+      const scrollContainer = document.getElementById(
+        "products-scroll-container",
+      );
+      const scroll = document.getElementById("products-scroll");
+      const empty = document.getElementById("products-empty");
+
+      try {
+        const response = await fetch(
+          `${API_BASE}/products/?is_featured=true&ordering=-created_at`,
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const products = data.results || data;
+
+        loading.classList.add("hidden");
+
+        if (products.length === 0) {
+          empty.classList.remove("hidden");
+          empty.innerHTML = `
+                    <div class="text-6xl mb-4">🌱</div>
+                    <h3 class="text-xl font-bold mb-2">هنوز محصول ویژه‌ای نداری</h3>
+                    <p class="opacity-70">تو پنل ادمین، محصولات رو «ویژه» کن.</p>
+                `;
+          return;
+        }
+
+        products.forEach((product, index) => {
+          const card = createProductCard(product, index);
+          scroll.appendChild(card);
+        });
+
+        scrollContainer.classList.remove("hidden");
+
+        initReveal();
+        initScrollButtons();
+        initScrollProgress();
+        initAutoScroll();
+      } catch (error) {
+        console.error("Error loading products:", error);
+        loading.classList.add("hidden");
+        empty.classList.remove("hidden");
+        empty.innerHTML = `
+                <div class="text-6xl mb-4">⚠️</div>
+                <h3 class="text-xl font-bold mb-2">خطا در لود محصولات</h3>
+                <p class="opacity-70 text-sm">${error.message}</p>
+            `;
+      }
+    }
+
+    // ==================== Create Product Card ====================
+    function createProductCard(product, index) {
+      const div = document.createElement("div");
+      div.className = `reveal reveal-delay-${(index % 4) + 1} group bg-white dark:bg-white/5 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1`;
+
+      const price = parseInt(product.price).toLocaleString("fa-IR");
+
+      div.innerHTML = `
+            <a href="/products/${escapeHTML(product.slug)}/" class="block">
+                <div class="aspect-square bg-phema-green/10 dark:bg-phema-gold/5 flex items-center justify-center text-6xl overflow-hidden">
+                    ${
+                      product.image
+                        ? `<img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">`
+                        : "🌱"
+                    }
+                </div>
+            </a>
+            <div class="p-5">
+                <a href="/products/${escapeHTML(product.slug)}/">
+                    <h3 class="font-bold mb-2 group-hover:text-phema-green dark:group-hover:text-phema-gold transition-colors">${escapeHTML(product.name)}</h3>
+                </a>
+                <p class="text-sm opacity-60 mb-3">${escapeHTML(product.description ? product.description.substring(0, 50) + "..." : "بدون توضیحات")}</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-lg font-bold text-phema-green dark:text-phema-gold transition-colors">${price} تومان</span>
+                    <button class="add-to-cart-btn small w-10 h-10 rounded-full bg-phema-green dark:bg-phema-gold text-white dark:text-phema-text flex items-center justify-center transition-colors" title="افزودن به سبد" data-product-id="${product.id}">
+                        <span class="cart-plant">🪴</span>
+                        <span class="cart-box">📦</span>
+                        <svg class="btn-text w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5v14M5 12h14"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        `;
+
+      const addBtn = div.querySelector(".add-to-cart-btn");
+      if (addBtn) {
+        addBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+          const productId = parseInt(this.dataset.productId);
+          window.addToCartAnimated(productId, this, 1);
+        });
+      }
+
+      return div;
+    }
+
+    // ==================== Emoji Helper ====================
+    function getCategoryEmoji(name) {
+      if (!name) return "🌿";
+      if (name.includes("آپارتمانی") || name.includes("گیاه")) return "🪴";
+      if (name.includes("گل") || name.includes("بریده")) return "💐";
+      if (name.includes("گلدان") || name.includes("سبد")) return "🏺";
+      if (name.includes("خاک") || name.includes("کود")) return "🌱";
+      if (name.includes("بذر") || name.includes("نهال")) return "🌰";
+      if (name.includes("لوازم") || name.includes("جانبی")) return "🧴";
+      return "🌿";
+    }
+
+    // ==================== Reveal Observer ====================
+    function initReveal() {
+      const reveals = document.querySelectorAll(".reveal:not(.active)");
+      if (reveals.length === 0) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+          rootMargin: "0px 0px -80px 0px",
+        },
+      );
+
+      reveals.forEach((el) => observer.observe(el));
+    }
+
+    // ==================== Scroll Buttons ====================
+    function initScrollButtons() {
+      const scroll = document.getElementById("products-scroll");
+      const leftBtn = document.getElementById("scroll-left-btn");
+      const rightBtn = document.getElementById("scroll-right-btn");
+
+      if (!scroll || !leftBtn || !rightBtn) return;
+
+      leftBtn.addEventListener("click", () => {
+        scroll.scrollBy({ left: -300, behavior: "smooth" });
+      });
+
+      rightBtn.addEventListener("click", () => {
+        scroll.scrollBy({ left: 300, behavior: "smooth" });
+      });
+
+      function checkScroll() {
+        if (scroll.scrollWidth <= scroll.clientWidth) {
+          leftBtn.style.display = "none";
+          rightBtn.style.display = "none";
+        } else {
+          leftBtn.style.display = "flex";
+          rightBtn.style.display = "flex";
+        }
+      }
+
+      checkScroll();
+      window.addEventListener("resize", checkScroll);
+    }
+
+    // ==================== Scroll Progress ====================
+    function initScrollProgress() {
+      const scroll = document.getElementById("products-scroll");
+      const progressBar = document.getElementById("scroll-progress-bar");
+
+      if (!scroll || !progressBar) return;
+
+      scroll.addEventListener("scroll", () => {
+        const scrollWidth = scroll.scrollWidth - scroll.clientWidth;
+        const scrollLeft = scroll.scrollLeft;
+        const progress = scrollWidth > 0 ? (scrollLeft / scrollWidth) * 100 : 0;
+        progressBar.style.width = progress + "%";
+      });
+
+      setTimeout(() => {
+        const scrollWidth = scroll.scrollWidth - scroll.clientWidth;
+        progressBar.style.width = scrollWidth > 0 ? "0%" : "100%";
+      }, 100);
+    }
+
+    // ==================== Auto Scroll ====================
+    function initAutoScroll() {
+      const scroll = document.getElementById("products-scroll");
+      if (!scroll) return;
+
+      let scrollDirection = 1;
+      let isPaused = false;
+
+      scroll.addEventListener("mouseenter", () => (isPaused = true));
+      scroll.addEventListener("mouseleave", () => (isPaused = false));
+
+      scroll.addEventListener("touchstart", () => (isPaused = true));
+      scroll.addEventListener("touchend", () => {
+        setTimeout(() => (isPaused = false), 3000);
+      });
+
+      setInterval(() => {
+        if (isPaused) return;
+
+        const maxScroll = scroll.scrollWidth - scroll.clientWidth;
+        const currentScroll = scroll.scrollLeft;
+
+        if (currentScroll >= maxScroll - 10) {
+          scrollDirection = -1;
+        } else if (currentScroll <= 10) {
+          scrollDirection = 1;
+        }
+
+        scroll.scrollBy({ left: scrollDirection * 150, behavior: "smooth" });
+      }, 5000);
+    }
+
+    // ==================== Init ====================
+    loadCategories();
+    loadFeaturedProducts();
+  })();
+</script>
 {% endblock %}

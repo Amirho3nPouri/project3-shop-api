@@ -208,31 +208,31 @@ PhemaPlant{% endblock %} {% block content %}
       const subtotal = parseInt(item.subtotal).toLocaleString("fa-IR");
 
       div.innerHTML = `
-            <a href="/products/${item.product_slug}/" class="flex-shrink-0">
-                <div class="w-20 h-20 md:w-24 md:h-24 rounded-xl bg-phema-green/10 dark:bg-phema-gold/5 flex items-center justify-center text-3xl overflow-hidden">
-                    🌱
-                </div>
+        <a href="/products/${escapeHTML(item.product_slug)}/" class="flex-shrink-0">
+            <div class="w-20 h-20 md:w-24 md:h-24 rounded-xl bg-phema-green/10 dark:bg-phema-gold/5 flex items-center justify-center text-3xl overflow-hidden">
+                🌱
+            </div>
+        </a>
+        <div class="flex-1 min-w-0">
+            <a href="/products/${escapeHTML(item.product_slug)}/" class="block">
+                <h3 class="font-bold mb-1 hover:text-phema-green dark:hover:text-phema-gold transition-colors truncate">${escapeHTML(item.product_name)}</h3>
             </a>
-            <div class="flex-1 min-w-0">
-                <a href="/products/${item.product_slug}/" class="block">
-                    <h3 class="font-bold mb-1 hover:text-phema-green dark:hover:text-phema-gold transition-colors truncate">${item.product_name}</h3>
-                </a>
-                <p class="text-sm opacity-60 mb-3">${productPrice} تومان</p>
-                <div class="flex items-center gap-2">
-                    <button class="qty-btn w-8 h-8 rounded-full bg-phema-bg dark:bg-phema-bg-dark hover:bg-phema-green hover:text-white transition-colors flex items-center justify-center text-lg" data-action="minus">−</button>
-                    <span class="w-8 text-center font-bold">${item.quantity}</span>
-                    <button class="qty-btn w-8 h-8 rounded-full bg-phema-bg dark:bg-phema-bg-dark hover:bg-phema-green hover:text-white transition-colors flex items-center justify-center text-lg" data-action="plus">+</button>
-                </div>
+            <p class="text-sm opacity-60 mb-3">${productPrice} تومان</p>
+            <div class="flex items-center gap-2">
+                <button class="qty-btn w-8 h-8 rounded-full bg-phema-bg dark:bg-phema-bg-dark hover:bg-phema-green hover:text-white transition-colors flex items-center justify-center text-lg" data-action="minus">−</button>
+                <span class="w-8 text-center font-bold">${item.quantity}</span>
+                <button class="qty-btn w-8 h-8 rounded-full bg-phema-bg dark:bg-phema-bg-dark hover:bg-phema-green hover:text-white transition-colors flex items-center justify-center text-lg" data-action="plus">+</button>
             </div>
-            <div class="flex-shrink-0 flex flex-col items-end gap-2">
-                <span class="font-bold text-phema-green dark:text-phema-gold">${subtotal} تومان</span>
-                <button class="delete-btn text-red-400 hover:text-red-600 transition-colors" title="حذف">
-                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"/>
-                    </svg>
-                </button>
-            </div>
-        `;
+        </div>
+        <div class="flex-shrink-0 flex flex-col items-end gap-2">
+            <span class="font-bold text-phema-green dark:text-phema-gold">${subtotal} تومان</span>
+            <button class="delete-btn text-red-400 hover:text-red-600 transition-colors" title="حذف">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"/>
+                </svg>
+            </button>
+        </div>
+    `;
 
       div
         .querySelector('.qty-btn[data-action="minus"]')

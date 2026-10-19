@@ -1,12 +1,15 @@
+# ==================== Django Imports ====================
 from django.contrib import admin
-from django.urls import path, include
+from django.contrib.auth import views as auth_views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns   # ← این خط
 from django.http import JsonResponse
+from django.shortcuts import render
+from django.urls import path, include
 
+# ==================== Third-party Imports ====================
 from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
     TokenRefreshView,
     TokenVerifyView,
 )
@@ -17,55 +20,55 @@ from drf_spectacular.views import (
     SpectacularRedocView,
 )
 
-from django.contrib.auth import views as auth_views
+# ==================== Local Imports ====================
+from shop.views import CustomTokenObtainPairView
 
 
 # ==================== Error Handlers ====================
 
 def custom_404(request, exception):
-    return JsonResponse({
-        'error': 'Not Found',
-        'status_code': 404,
-        'message': 'آدرسی که خواستی وجود نداره.',
-        'path': request.path,
-    }, status=404, json_dumps_params={'ensure_ascii': False, 'indent': 2})
-
-
-from django.shortcuts import render
+    """404 - JSON for API, HTML for frontend"""
+    if request.path.startswith('/api/'):
+        return JsonResponse({
+            'error': 'Not Found',
+            'status_code': 404,
+            'message': 'آدرسی که خواستی وجود نداره.',
+            'path': request.path,
+        }, status=404, json_dumps_params={'ensure_ascii': False, 'indent': 2})
+    return render(request, 'shop/404.html', status=404)
 
 
 def custom_500(request):
-    # اگه درخواست به /api/ بود، JSON برگردون
+    """500 - JSON for API, HTML for frontend"""
     if request.path.startswith('/api/'):
         return JsonResponse({
             'error': 'Internal Server Error',
             'status_code': 500,
             'message': 'خطای غیرمنتظره‌ای رخ داد. لطفاً بعداً تلاش کن.',
         }, status=500, json_dumps_params={'ensure_ascii': False, 'indent': 2})
-    # وگرنه HTML
     return render(request, 'shop/500.html', status=500)
 
 
 # ==================== URL Patterns ====================
 
 urlpatterns = [
-    # Admin
+    # ---------- Admin ----------
     path('admin/', admin.site.urls),
 
-    # API (JSON)
+    # ---------- API ----------
     path('api/', include('shop.urls')),
 
-    # JWT
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # ---------- JWT ----------
+    path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 
-    # مستندات
+    # ---------- API Docs ----------
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 
-    # Password Reset
+    # ---------- Password Reset ----------
     path('api/password-reset/', auth_views.PasswordResetView.as_view(
         template_name='registration/password_reset_form.html',
         email_template_name='registration/password_reset_email.html',
@@ -87,14 +90,14 @@ urlpatterns = [
         template_name='registration/password_reset_complete.html',
     ), name='password_reset_complete'),
 
-    # Frontend (HTML)
+    # ---------- Frontend (HTML) ----------
     path('', include('shop.web_urls')),
 ]
 
 
 # ==================== Static & Media ====================
 
-urlpatterns += staticfiles_urlpatterns()   # ← این خط (برای استاتیک)
+urlpatterns += staticfiles_urlpatterns()
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
@@ -104,25 +107,3 @@ if settings.DEBUG:
 
 handler404 = 'config.urls.custom_404'
 handler500 = 'config.urls.custom_500'
-
-# قبل
-def custom_404(request, exception):
-    return JsonResponse({...}, status=404)
-
-
-# بعد
-from django.shortcuts import render
-
-def custom_404(request, exception):
-    return render(request, 'shop/404.html', status=404)
-
-def custom_404(request, exception):
-    # اگه درخواست به /api/ بود، JSON برگردون
-    if request.path.startswith('/api/'):
-        return JsonResponse({
-            'error': 'Not Found',
-            'status_code': 404,
-            'message': 'آدرسی که خواستی وجود نداره.',
-        }, status=404, json_dumps_params={'ensure_ascii': False, 'indent': 2})
-    # وگرنه HTML
-    return render(request, 'shop/404.html', status=404)

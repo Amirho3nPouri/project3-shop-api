@@ -5,6 +5,7 @@ from .views import (
     CategoryViewSet, ProductViewSet,
     CartViewSet, CartItemViewSet, OrderViewSet,
     RegisterView, ProfileView, ChangePasswordView,
+    LogoutView,  
 )
 
 router = DefaultRouter()
@@ -19,4 +20,5 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('profile/', ProfileView.as_view(), name='profile'),
     path('profile/change-password/', ChangePasswordView.as_view(), name='change-password'),
+    path('logout/', LogoutView.as_view(), name='logout'),   # ← اضافه کن
 ]
